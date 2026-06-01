@@ -1,341 +1,152 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vocabulary Quiz Games</title>
-    <meta
-      name="description"
-      content="A simple GitHub Pages-ready vocabulary quiz starter page for kids."
-    />
-    <style>
-      :root {
-        color-scheme: light;
-        --bg: #f7f7fb;
-        --card: rgba(255, 255, 255, 0.86);
-        --text: #1f2937;
-        --muted: #6b7280;
-        --primary: #6366f1;
-        --primary-dark: #4f46e5;
-        --accent: #22c55e;
-        --shadow: 0 20px 50px rgba(79, 70, 229, 0.12);
-        --radius: 24px;
-      }
+<!DOCTYPE html>
 
-      * {
-        box-sizing: border-box;
-      }
-
-      html,
-      body {
-        margin: 0;
-        min-height: 100%;
-        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-          "Segoe UI", sans-serif;
-        color: var(--text);
-        background:
-          radial-gradient(circle at top left, rgba(99, 102, 241, 0.14), transparent 35%),
-          radial-gradient(circle at top right, rgba(34, 197, 94, 0.14), transparent 30%),
-          linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
-      }
-
-      body {
-        display: grid;
-        place-items: center;
-        padding: 24px;
-      }
-
-      .shell {
-        width: min(100%, 1080px);
-      }
-
-      .hero {
-        display: grid;
-        gap: 24px;
-        grid-template-columns: 1.2fr 0.8fr;
-        align-items: center;
-      }
-
-      .panel {
-        background: var(--card);
-        backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.8);
-        box-shadow: var(--shadow);
-        border-radius: var(--radius);
-      }
-
-      .intro {
-        padding: 32px;
-      }
-
-      .badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 14px;
-        border-radius: 999px;
-        background: rgba(99, 102, 241, 0.1);
-        color: var(--primary-dark);
-        font-weight: 700;
-        font-size: 0.92rem;
-      }
-
-      h1 {
-        margin: 18px 0 12px;
-        font-size: clamp(2.3rem, 4vw, 4.5rem);
-        line-height: 1.02;
-        letter-spacing: -0.04em;
-      }
-
-      .lead {
-        margin: 0;
-        max-width: 58ch;
-        font-size: 1.08rem;
-        line-height: 1.7;
-        color: var(--muted);
-      }
-
-      .actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 24px;
-      }
-
-      .button {
-        appearance: none;
-        border: 0;
-        border-radius: 14px;
-        padding: 14px 18px;
-        font: inherit;
-        font-weight: 700;
-        cursor: pointer;
-        transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
-      }
-
-      .button:hover {
-        transform: translateY(-1px);
-      }
-
-      .button.primary {
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-        color: white;
-        box-shadow: 0 16px 28px rgba(99, 102, 241, 0.28);
-      }
-
-      .button.secondary {
-        background: white;
-        color: var(--text);
-        border: 1px solid rgba(99, 102, 241, 0.16);
-      }
-
-      .quiz {
-        padding: 24px;
-      }
-
-      .quiz h2 {
-        margin: 0 0 10px;
-        font-size: 1.2rem;
-      }
-
-      .question {
-        margin: 0 0 16px;
-        font-size: 1.6rem;
-        font-weight: 800;
-        line-height: 1.2;
-      }
-
-      .options {
-        display: grid;
-        gap: 12px;
-      }
-
-      .option {
-        border: 1px solid rgba(99, 102, 241, 0.15);
-        background: white;
-        padding: 14px 16px;
-        text-align: left;
-        border-radius: 16px;
-        font-weight: 700;
-        color: var(--text);
-      }
-
-      .option.correct {
-        border-color: rgba(34, 197, 94, 0.5);
-        background: rgba(34, 197, 94, 0.1);
-      }
-
-      .option.wrong {
-        border-color: rgba(239, 68, 68, 0.5);
-        background: rgba(239, 68, 68, 0.08);
-      }
-
-      .status {
-        min-height: 1.5rem;
-        margin-top: 14px;
-        font-weight: 700;
-        color: var(--primary-dark);
-      }
-
-      .features {
-        display: grid;
-        gap: 16px;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        margin-top: 24px;
-      }
-
-      .feature {
-        padding: 18px;
-      }
-
-      .feature h3 {
-        margin: 0 0 6px;
-        font-size: 1rem;
-      }
-
-      .feature p {
-        margin: 0;
-        color: var(--muted);
-        line-height: 1.6;
-      }
-
-      footer {
-        padding: 18px 4px 0;
-        color: var(--muted);
-        font-size: 0.95rem;
-        text-align: center;
-      }
-
-      @media (max-width: 860px) {
-        .hero,
-        .features {
-          grid-template-columns: 1fr;
-        }
-
-        .intro,
-        .quiz {
-          padding: 22px;
-        }
-      }
-    </style>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Paper Garden - Home Garden</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary": "#17cf26",
+          "background-light": "#f6f8f6",
+          "background-dark": "#112112",
+        },
+        fontFamily: {
+          "display": ["Literata", "serif"]
+        },
+        borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+      },
+    },
+  }
+</script>
+<style>
+  body {
+    font-family: 'Literata', serif;
+    background-color: theme('colors.background-light');
+    color: #2C302E;
+  }
+  .texture-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
   </head>
-  <body>
-    <main class="shell">
-      <section class="hero">
-        <div class="panel intro">
-          <div class="badge">🌟 GitHub Pages Ready</div>
-          <h1>Vocabulary Quiz Games</h1>
-          <p class="lead">
-            A simple starter page for a kid-friendly vocabulary quiz app. This
-            page is static, lightweight, and ready to be published with GitHub Pages.
-          </p>
-          <div class="actions">
-            <button class="button primary" id="tryQuiz">Try the quiz</button>
-            <button class="button secondary" id="resetQuiz">Reset</button>
-          </div>
-        </div>
-
-        <aside class="panel quiz" aria-live="polite">
-          <h2>Dummy quiz</h2>
-          <p class="question" id="question">Which word means “very happy”?</p>
-          <div class="options" id="options">
-            <button class="button option" data-answer="wrong">Sleepy</button>
-            <button class="button option" data-answer="correct">Joyful</button>
-            <button class="button option" data-answer="wrong">Tiny</button>
-          </div>
-          <p class="status" id="status">Pick the best answer.</p>
-        </aside>
-      </section>
-
-      <section class="features" aria-label="Highlights">
-        <article class="panel feature">
-          <h3>Simple</h3>
-          <p>One clean HTML file makes it easy to host on GitHub Pages.</p>
-        </article>
-        <article class="panel feature">
-          <h3>Kid-friendly</h3>
-          <p>Big buttons, clear text, and a friendly layout for early learners.</p>
-        </article>
-        <article class="panel feature">
-          <h3>Easy to expand</h3>
-          <p>Add more words, scores, levels, and sounds later when you are ready.</p>
-        </article>
-      </section>
-
-      <footer>Demo page for a future vocabulary quiz game.</footer>
-    </main>
-
-    <script>
-      const questionEl = document.getElementById('question');
-      const optionsEl = document.getElementById('options');
-      const statusEl = document.getElementById('status');
-      const tryQuizBtn = document.getElementById('tryQuiz');
-      const resetQuizBtn = document.getElementById('resetQuiz');
-
-      const questions = [
-        {
-          question: 'Which word means “very happy”?',
-          options: ['Sleepy', 'Joyful', 'Tiny'],
-          correct: 1,
-        },
-        {
-          question: 'Which word means “a place to live”?',
-          options: ['Home', 'Cloud', 'Apple'],
-          correct: 0,
-        },
-        {
-          question: 'Which word means “to begin”?',
-          options: ['Finish', 'Start', 'Hide'],
-          correct: 1,
-        },
-      ];
-
-      let currentIndex = 0;
-      let answered = false;
-
-      function renderQuestion() {
-        const item = questions[currentIndex];
-        questionEl.textContent = item.question;
-        optionsEl.innerHTML = '';
-        item.options.forEach((label, index) => {
-          const button = document.createElement('button');
-          button.className = 'button option';
-          button.textContent = label;
-          button.dataset.index = String(index);
-          optionsEl.appendChild(button);
-        });
-        statusEl.textContent = 'Pick the best answer.';
-        answered = false;
-      }
-
-      optionsEl.addEventListener('click', (event) => {
-        const button = event.target.closest('button[data-index]');
-        if (!button || answered) return;
-
-        const selectedIndex = Number(button.dataset.index);
-        const item = questions[currentIndex];
-        answered = true;
-
-        [...optionsEl.querySelectorAll('button')].forEach((optionButton) => {
-          const index = Number(optionButton.dataset.index);
-          if (index === item.correct) optionButton.classList.add('correct');
-          if (index === selectedIndex && index !== item.correct) optionButton.classList.add('wrong');
-        });
-
-        statusEl.textContent = selectedIndex === item.correct ? 'Great job!' : 'Almost! Try the next one.';
-      });
-
-      tryQuizBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % questions.length;
-        renderQuestion();
-      });
-
-      resetQuizBtn.addEventListener('click', () => {
-        currentIndex = 0;
-        renderQuestion();
-      });
-
-      renderQuestion();
-    </script>
-  </body>
-</html>
+<body class="antialiased min-h-screen flex flex-col relative overflow-x-hidden pb-[80px]">
+<div class="texture-overlay"></div>
+<!-- Header -->
+<header class="sticky top-0 z-10 bg-background-light/90 backdrop-blur-sm px-6 py-5 flex items-center justify-between border-b border-gray-200">
+<h1 class="text-2xl font-bold font-display text-[#2C302E]">Your Garden</h1>
+<div class="flex items-center gap-1.5 px-3 py-1.5 bg-orange-50 rounded-full border border-orange-100 shadow-sm">
+<span class="text-[#E5A985] font-bold">🔥</span>
+<span class="text-[#2C302E] font-semibold text-sm">5 Streak</span>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 px-6 py-8 pb-32">
+<!-- Timeline Container -->
+<div class="relative pl-6 space-y-10">
+<!-- Vertical Line -->
+<div class="absolute left-8 top-8 bottom-12 w-0.5 bg-gray-200 z-0"></div>
+<!-- Node 1: Seedling -->
+<div class="relative z-10">
+<!-- Node Dot -->
+<div class="absolute -left-[1.35rem] top-4 w-6 h-6 rounded-full bg-primary border-4 border-background-light flex items-center justify-center">
+<div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+</div>
+<!-- Card -->
+<div class="bg-white rounded-lg p-5 shadow-[0_4px_12px_rgba(44,48,46,0.05)] border border-gray-100 cursor-pointer hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h2 class="text-xl font-semibold font-display text-[#2C302E]">Seedling</h2>
+<p class="text-[#A4ABA6] text-sm mt-0.5">Word Introduction</p>
+</div>
+<span class="text-[#A4ABA6] text-xs font-medium px-2 py-1 bg-gray-50 rounded-md">5 mins</span>
+</div>
+<!-- Expanded State (Simulated) -->
+<div class="mt-4 pt-4 border-t border-gray-50 hidden group-hover:block transition-all">
+<button class="w-full bg-primary text-white font-bold py-3 px-4 rounded-lg shadow-sm hover:bg-green-600 transition-colors">Start Module</button>
+</div>
+</div>
+</div>
+<!-- Node 2: Watering -->
+<div class="relative z-10 opacity-70">
+<!-- Node Dot -->
+<div class="absolute -left-[1.35rem] top-4 w-6 h-6 rounded-full bg-gray-300 border-4 border-background-light"></div>
+<!-- Card -->
+<div class="bg-white rounded-lg p-5 shadow-[0_4px_12px_rgba(44,48,46,0.05)] border border-gray-100">
+<div class="flex justify-between items-start">
+<div>
+<h2 class="text-xl font-semibold font-display text-[#2C302E]">Watering</h2>
+<p class="text-[#A4ABA6] text-sm mt-0.5">Sentence Practice</p>
+</div>
+<span class="text-[#A4ABA6] text-xs font-medium px-2 py-1 bg-gray-50 rounded-md">5 mins</span>
+</div>
+</div>
+</div>
+<!-- Node 3: Pruning -->
+<div class="relative z-10 opacity-50">
+<!-- Node Dot -->
+<div class="absolute -left-[1.35rem] top-4 w-6 h-6 rounded-full bg-gray-200 border-4 border-background-light"></div>
+<!-- Card -->
+<div class="bg-white rounded-lg p-5 shadow-[0_4px_12px_rgba(44,48,46,0.05)] border border-gray-100">
+<div class="flex justify-between items-start">
+<div>
+<h2 class="text-xl font-semibold font-display text-[#2C302E]">Pruning</h2>
+<p class="text-[#A4ABA6] text-sm mt-0.5">Synonyms &amp; Antonyms</p>
+</div>
+<span class="text-[#A4ABA6] text-xs font-medium px-2 py-1 bg-gray-50 rounded-md">5 mins</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Action Button -->
+<div class="mt-12">
+<button class="w-full h-14 bg-primary text-white font-bold text-lg rounded-lg shadow-lg hover:shadow-xl hover:bg-green-600 transition-all flex items-center justify-center gap-2">
+        Start Session
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">arrow_forward</span>
+</button>
+</div>
+</main>
+<!-- Bottom Navigation (Shared Component) -->
+<div class="fixed bottom-0 left-0 right-0 w-full z-20">
+<div class="flex gap-2 border-t border-[#f0f4f1] bg-white px-4 pb-6 pt-2 shadow-[0_-4px_16px_rgba(0,0,0,0.02)]">
+<a class="just flex flex-1 flex-col items-center justify-end gap-1 rounded-full text-primary" href="#">
+<div class="text-primary flex h-8 items-center justify-center" data-icon="House" data-size="24px" data-weight="fill">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+</div>
+<p class="text-primary text-xs font-medium leading-normal tracking-[0.015em]">Home</p>
+</a>
+<a class="just flex flex-1 flex-col items-center justify-end gap-1 text-[#A4ABA6]" href="#">
+<div class="text-[#A4ABA6] flex h-8 items-center justify-center" data-icon="Books" data-size="24px" data-weight="regular">
+<span class="material-symbols-outlined">library_books</span>
+</div>
+<p class="text-[#A4ABA6] text-xs font-medium leading-normal tracking-[0.015em]">Library</p>
+</a>
+<a class="just flex flex-1 flex-col items-center justify-end gap-1 text-[#A4ABA6]" href="#">
+<div class="text-[#A4ABA6] flex h-8 items-center justify-center" data-icon="Gear" data-size="24px" data-weight="regular">
+<span class="material-symbols-outlined">settings</span>
+</div>
+<p class="text-[#A4ABA6] text-xs font-medium leading-normal tracking-[0.015em]">Settings</p>
+</a>
+</div>
+</div>
+</body></html>
