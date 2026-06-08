@@ -1,0 +1,1 @@
+window.renderFooter({ active: "home" });

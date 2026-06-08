@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Watering Practice - Paper Garden</title>
+<script src="resources/js/tailwind-config.js"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="resources/styles/common.css" rel="stylesheet">
+<link href="resources/styles/watering.css" rel="stylesheet">
+  </head>
+<body class="grainy font-body-md text-on-background min-h-screen flex flex-col items-center">
+<!-- Top Navigation Area (Transactional/Focused Journey) -->
+<header class="w-full max-w-md px-container-padding py-4 flex flex-col gap-4 sticky top-0 bg-background-off-white z-40">
+<div class="flex items-center justify-between">
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container-low transition-colors" onclick="history.back()">
+<span class="material-symbols-outlined text-on-surface">arrow_back</span>
+</button>
+<h1 class="font-display-lg-mobile text-display-lg-mobile text-primary">Watering Time</h1>
+<div class="flex items-center gap-1 font-label-md text-label-md text-on-surface-variant"></div>
+</div>
+<!-- Progress Bar -->
+<div class="w-full h-2 bg-secondary-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-2/3 transition-all duration-700 ease-out" id="progress-bar"></div>
+</div>
+</header>
+<main class="w-full max-w-md flex-grow flex flex-col px-container-padding py-8">
+<!-- Illustration / Mood Area -->
+
+<!-- Central Sentence Card -->
+<div class="bg-surface-white rounded-xl p-inner-card-padding shadow-sm border border-border-subtle relative overflow-hidden flex flex-col items-center justify-center text-center">
+<p class="font-display-lg-mobile text-display-lg-mobile leading-relaxed">
+                The <span class="inline-block border-b-2 border-primary min-w-[100px] text-primary-container transition-all duration-300 mx-1" id="sentence-gap">___</span> gardener carefully tended to each flower.
+            </p>
+<!-- Watermark Decoration -->
+<span class="material-symbols-outlined absolute -bottom-4 -right-4 text-surface-container opacity-20 text-[80px]">potted_plant</span>
+</div>
+<!-- Feedback Hint -->
+<div class="mt-4 text-center h-6 transition-opacity" id="feedback-hint">
+<p class="text-label-md font-label-md text-on-surface-variant">Tap the word that completes the garden!</p>
+</div>
+</main>
+<!-- Word Bank -->
+<section class="w-full max-w-md bg-surface-container-low px-container-padding pt-6 pb-12 rounded-t-[2rem] shadow-[0_-4px_10px_rgba(0,0,0,0.02)] border-t border-border-subtle">
+<div class="grid grid-cols-2 gap-stack-gap" id="word-bank">
+<button class="word-option h-14 bg-surface-white border-2 border-border-subtle rounded-full font-button-text text-button-text text-on-surface hover:border-outline-variant active:scale-95 transition-all" onclick="checkAnswer(this, 'messy')">
+                messy
+            </button>
+<button class="word-option h-14 bg-surface-white border-2 border-border-subtle rounded-full font-button-text text-button-text text-on-surface hover:border-outline-variant active:scale-95 transition-all" onclick="checkAnswer(this, 'diligent')">
+                diligent
+            </button>
+<button class="word-option h-14 bg-surface-white border-2 border-border-subtle rounded-full font-button-text text-button-text text-on-surface hover:border-outline-variant active:scale-95 transition-all" onclick="checkAnswer(this, 'lazy')">
+                lazy
+            </button>
+<button class="word-option h-14 bg-surface-white border-2 border-border-subtle rounded-full font-button-text text-button-text text-on-surface hover:border-outline-variant active:scale-95 transition-all" onclick="checkAnswer(this, 'forgetful')">
+                forgetful
+            </button>
+</div>
+</section>
+<!-- Success Drawer (Hidden by default) -->
+<div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-surface-container-highest translate-y-full transition-transform duration-500 z-50 rounded-t-[2rem] p-inner-card-padding" id="success-drawer">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined text-[32px]">check_circle</span>
+</div>
+<div>
+<h3 class="font-button-text text-[20px] text-on-primary-container">Excellent Work!</h3>
+<p class="text-label-md font-label-md text-on-surface-variant">The garden is thriving.</p>
+</div>
+</div>
+<button class="w-full h-14 bg-primary text-on-primary rounded-full font-button-text text-button-text active:scale-95 transition-all" onclick="resetPage()">
+            Continue
+        </button>
+</div>
+<nav id="app-footer"></nav>
+<script src="resources/js/footer.js"></script>
+<script src="resources/js/watering.js"></script>
+
+
+
+</body></html>

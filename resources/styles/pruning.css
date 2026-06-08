@@ -1,0 +1,39 @@
+body {
+  background-color: #f6f8f6;
+  background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+  font-family: 'Literata', serif;
+}
+
+.garden-bed {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.garden-bed.drag-over {
+  transform: scale(1.02);
+  background-color: rgba(23, 207, 38, 0.05);
+  border-color: #17cf26;
+}
+
+.word-chip {
+  cursor: grab;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.word-chip:active {
+  cursor: grabbing;
+  transform: scale(0.95);
+}
+
+.drop-zone-animation {
+  animation: pulse-border 2s infinite;
+}
+
+@keyframes pulse-border {
+  0% { border-color: #e5e7eb; }
+  50% { border-color: #bbcbb3; }
+  100% { border-color: #e5e7eb; }
+}
+
+.success-glow {
+  box-shadow: 0 0 15px rgba(23, 207, 38, 0.5);
+}

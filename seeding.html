@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Paper Garden - Meticulous</title>
+<script src="resources/js/tailwind-config.js"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="resources/styles/common.css" rel="stylesheet">
+<link href="resources/styles/seeding.css" rel="stylesheet">
+  </head>
+<body class="bg-background min-h-screen flex flex-col font-body-md text-on-background relative overflow-x-hidden">
+<div class="fixed inset-0 garden-grain z-0"></div>
+<!-- TopAppBar -->
+<header class="sticky top-0 z-40 bg-background/80 backdrop-blur-md w-full max-w-md mx-auto flex justify-between items-center px-container-padding py-4">
+<button aria-label="Back" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container-low transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-display-lg-mobile text-display-lg-mobile text-primary">Plan A Seed</h1>
+
+</header>
+<main class="flex-1 w-full max-w-md mx-auto px-container-padding pt-8 pb-32 relative z-10">
+<!-- Progress Bar -->
+<div class="w-full h-2 bg-surface-container rounded-full mb-12 overflow-hidden">
+<div class="h-full bg-primary-container w-2/3 transition-all duration-700 ease-out rounded-full"></div>
+</div>
+<!-- Flashcard Perspective Wrapper -->
+<div class="perspective-1000 w-full mb-stack-gap h-[440px]">
+<div class="relative w-full h-full transition-transform duration-700 preserve-3d cursor-pointer group" id="flashcard">
+<!-- Front Side -->
+<div class="absolute inset-0 backface-hidden bg-surface-white rounded-xl shadow-sm border border-border-subtle p-inner-card-padding flex flex-col items-center justify-center text-center">
+<div class="mb-4 opacity-40">
+<span class="material-symbols-outlined text-primary text-5xl" style="font-variation-settings: &quot;FILL&quot; 0;">potted_plant</span>
+</div>
+<span class="text-on-surface-variant font-label-md tracking-widest uppercase mb-2">NEW SEEDLING</span>
+<h2 class="font-display-lg text-display-lg text-primary mb-6">Meticulous</h2>
+<p class="text-on-surface-variant italic mb-8">/məˈtikyələs/</p>
+<button class="mt-auto px-6 py-3 bg-surface-container-low border-2 border-border-subtle rounded-full font-button-text text-button-text text-primary flex items-center gap-2 hover:bg-surface-container transition-colors active:scale-95 duration-150" onclick="flipCard()">
+                        Reveal Definition
+                        <span class="material-symbols-outlined text-[20px]">sync</span>
+</button>
+<!-- Decorative Watermark -->
+<div class="absolute bottom-4 right-4 opacity-5 pointer-events-none">
+<span class="material-symbols-outlined text-6xl">energy_savings_leaf</span>
+</div>
+</div>
+<!-- Back Side -->
+<div class="absolute inset-0 backface-hidden bg-surface-white rounded-xl shadow-sm border border-border-subtle p-inner-card-padding flex flex-col rotate-y-180 overflow-y-auto">
+<div class="flex justify-between items-start mb-6">
+<div class="w-10 h-10 bg-primary-container/20 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl">menu_book</span>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors" onclick="flipCard()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="space-y-6">
+<section>
+<h3 class="text-primary font-label-md uppercase tracking-wider mb-2">Definition</h3>
+<p class="text-on-surface text-lg leading-relaxed">
+                                Showing great attention to detail; very careful and precise.
+                            </p>
+</section>
+<section>
+<h3 class="text-primary font-label-md uppercase tracking-wider mb-2">Synonyms</h3>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-surface-container-low border border-border-subtle rounded-full text-on-surface-variant text-sm">diligent</span>
+<span class="px-3 py-1 bg-surface-container-low border border-border-subtle rounded-full text-on-surface-variant text-sm">scrupulous</span>
+<span class="px-3 py-1 bg-surface-container-low border border-border-subtle rounded-full text-on-surface-variant text-sm">fastidious</span>
+</div>
+</section>
+<section>
+<h3 class="text-primary font-label-md uppercase tracking-wider mb-2">Example</h3>
+<div class="p-4 bg-background-off-white rounded-lg border-l-4 border-primary">
+<p class="text-on-surface-variant italic leading-relaxed">
+                                    "The botanist was <span class="text-primary font-bold">meticulous</span> in recording every slight change in the seedling's growth."
+                                </p>
+</div>
+</section>
+</div>
+<!-- Watermark -->
+<div class="absolute bottom-4 right-4 opacity-5 pointer-events-none">
+<span class="material-symbols-outlined text-6xl">spa</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Interaction Section -->
+<div class="flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
+<p class="text-center text-on-surface-variant font-label-md mb-2">Did you know this word?</p>
+<div class="grid grid-cols-2 gap-4">
+<button class="h-14 bg-surface-white border-2 border-border-subtle rounded-xl font-button-text text-button-text text-on-surface hover:border-primary/50 transition-all active:scale-95">
+                    Not yet
+                </button>
+<button class="h-14 bg-primary text-white border-2 border-primary rounded-xl font-button-text text-button-text shadow-sm hover:opacity-90 transition-all active:scale-95">
+                    Got it!
+                </button>
+</div>
+</div>
+<!-- Background Illustration Prompt Elements -->
+
+</main>
+<!-- BottomNavBar -->
+<nav id="app-footer"></nav>
+<script src="resources/js/footer.js"></script>
+<script src="resources/js/seeding.js"></script>
+
+</body></html>
