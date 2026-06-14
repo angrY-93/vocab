@@ -47,4 +47,4 @@ const antonymBed = document.getElementById("antonyms-bed");
   });
 });
 
-window.renderFooter({ active: "library" });
+window.renderFooter({ active: "home" });

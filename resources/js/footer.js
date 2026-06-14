@@ -1,9 +1,9 @@
 (function () {
   const FOOTER_ITEMS = [
     { key: "home", label: "Home", icon: "home", href: "index.html" },
-    { key: "garden", label: "Garden", icon: "local_florist", href: "seeding.html" },
-    { key: "library", label: "Library", icon: "menu_book", href: "pruning.html" },
-    { key: "profile", label: "Profile", icon: "person", href: "#" }
+    { key: "garden", label: "Garden", icon: "local_florist", href: "garden.html" },
+    { key: "library", label: "Library", icon: "menu_book", href: "library.html" },
+    { key: "profile", label: "Profile", icon: "person", href: "profile.html" }
   ];
 
   function renderFooter(options = {}) {

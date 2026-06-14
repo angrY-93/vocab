@@ -46,4 +46,4 @@ setTimeout(() => {
   document.getElementById("feedback-hint").classList.remove("opacity-0");
 }, 1500);
 
-window.renderFooter({ active: "garden" });
+window.renderFooter({ active: "home" });
