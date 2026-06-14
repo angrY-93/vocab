@@ -1,0 +1,110 @@
+[
+  {
+    "id": "meticulous",
+    "word": "Meticulous",
+    "pronunciation": "/məˈtɪkjələs/",
+    "definition": "Showing great attention to detail; very careful and precise.",
+    "example": "The botanist was meticulous in recording every slight change in the seedling's growth.",
+    "synonyms": ["diligent", "scrupulous", "fastidious"],
+    "antonyms": ["careless", "sloppy", "hasty"]
+  },
+  {
+    "id": "courageous",
+    "word": "Courageous",
+    "pronunciation": "/kəˈreɪdʒəs/",
+    "definition": "Able to face danger, fear, or difficulty with confidence.",
+    "example": "The courageous hiker crossed the narrow bridge in strong winds.",
+    "synonyms": ["brave", "valiant", "bold"],
+    "antonyms": ["fearful", "cowardly", "timid"]
+  },
+  {
+    "id": "abundant",
+    "word": "Abundant",
+    "pronunciation": "/əˈbʌndənt/",
+    "definition": "Existing in large quantities; plentiful.",
+    "example": "After the rain, the garden had abundant blossoms.",
+    "synonyms": ["plentiful", "ample", "copious"],
+    "antonyms": ["scarce", "meager", "limited"]
+  },
+  {
+    "id": "fragile",
+    "word": "Fragile",
+    "pronunciation": "/ˈfrædʒaɪl/",
+    "definition": "Easily broken, damaged, or destroyed.",
+    "example": "Handle the fragile vase with both hands.",
+    "synonyms": ["delicate", "breakable", "frail"],
+    "antonyms": ["sturdy", "durable", "robust"]
+  },
+  {
+    "id": "vivid",
+    "word": "Vivid",
+    "pronunciation": "/ˈvɪvɪd/",
+    "definition": "Producing strong, clear, and detailed images in the mind.",
+    "example": "Her vivid description made the story come alive.",
+    "synonyms": ["bright", "graphic", "striking"],
+    "antonyms": ["dull", "faint", "vague"]
+  },
+  {
+    "id": "resilient",
+    "word": "Resilient",
+    "pronunciation": "/rɪˈzɪliənt/",
+    "definition": "Able to recover quickly from difficulties.",
+    "example": "The resilient team bounced back after a tough loss.",
+    "synonyms": ["tough", "adaptable", "hardy"],
+    "antonyms": ["fragile", "weak", "brittle"]
+  },
+  {
+    "id": "tranquil",
+    "word": "Tranquil",
+    "pronunciation": "/ˈtræŋkwɪl/",
+    "definition": "Free from disturbance; calm.",
+    "example": "The lake looked tranquil at sunrise.",
+    "synonyms": ["peaceful", "serene", "calm"],
+    "antonyms": ["noisy", "chaotic", "agitated"]
+  },
+  {
+    "id": "innovative",
+    "word": "Innovative",
+    "pronunciation": "/ˈɪnəveɪtɪv/",
+    "definition": "Featuring new methods; advanced and original.",
+    "example": "She proposed an innovative way to recycle water.",
+    "synonyms": ["creative", "original", "inventive"],
+    "antonyms": ["conventional", "traditional", "unimaginative"]
+  },
+  {
+    "id": "coherent",
+    "word": "Coherent",
+    "pronunciation": "/koʊˈhɪrənt/",
+    "definition": "Logical and consistent; clear and understandable.",
+    "example": "His explanation was coherent and easy to follow.",
+    "synonyms": ["logical", "consistent", "clear"],
+    "antonyms": ["confusing", "inconsistent", "disjointed"]
+  },
+  {
+    "id": "tedious",
+    "word": "Tedious",
+    "pronunciation": "/ˈtiːdiəs/",
+    "definition": "Too long, slow, or dull; tiresome.",
+    "example": "Copying the list by hand was a tedious task.",
+    "synonyms": ["boring", "monotonous", "dreary"],
+    "antonyms": ["exciting", "engaging", "lively"]
+  },
+  {
+    "id": "benevolent",
+    "word": "Benevolent",
+    "pronunciation": "/bəˈnevələnt/",
+    "definition": "Well meaning and kindly.",
+    "example": "The benevolent donor funded the school garden.",
+    "synonyms": ["kind", "charitable", "compassionate"],
+    "antonyms": ["cruel", "selfish", "malicious"]
+  },
+  {
+    "id": "ambiguous",
+    "word": "Ambiguous",
+    "pronunciation": "/æmˈbɪɡjuəs/",
+    "definition": "Open to more than one interpretation; unclear.",
+    "example": "The directions were ambiguous and hard to apply.",
+    "synonyms": ["unclear", "vague", "equivocal"],
+    "antonyms": ["clear", "definite", "explicit"]
+  }
+]

@@ -341,6 +341,28 @@ main {
   z-index: 40;
 }
 
+.start-plant-btn {
+  position: fixed;
+  border: none;
+  border-radius: 9999px;
+  background: var(--primary-deep);
+  color: #fff;
+  bottom: 6.1rem;
+  right: max(1.5rem, calc((100vw - 448px) / 2 + 1.5rem));
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.2rem;
+  box-shadow: 0 8px 20px rgba(0, 110, 11, 0.28);
+  font-size: 1rem;
+  font-weight: 700;
+  z-index: 40;
+}
+
+.start-plant-btn .material-symbols-outlined {
+  font-size: 1.4rem;
+}
+
 .stage-link-wrapper {
   display: inline-block; /* Keeps elements side-by-side if you have multiple stages */
   text-decoration: none; /* Stops the "SEEDLING" text from getting an underline */

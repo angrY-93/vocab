@@ -33,7 +33,7 @@
 <span class="material-symbols-outlined text-[120px]" style="font-variation-settings: &quot;FILL&quot; 1;">psychology</span>
 </div>
 <p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest mb-2">Target Word</p>
-<h2 class="font-display-lg text-display-lg text-primary mb-1">Courageous</h2>
+<h2 class="font-display-lg text-display-lg text-primary mb-1" id="pruning-word">Courageous</h2>
 <p class="font-body-md text-body-md text-on-surface-variant">Which words belong in the garden?</p>
 </section>
 <!-- Garden Beds (Drop Zones) -->
@@ -59,15 +59,13 @@
 
 <!-- Word Bank (Chips) -->
 <div class="flex flex-wrap gap-3 justify-center mt-8" id="word-bank">
-<div class="word-chip px-5 py-3 bg-white border-2 border-border-subtle rounded-full font-button-text text-button-text text-on-surface shadow-sm hover:border-outline transition-all active:scale-90" data-type="synonym" draggable="true" id="word-brave" ondragstart="drag(event)">Brave</div>
-<div class="word-chip px-5 py-3 bg-white border-2 border-border-subtle rounded-full font-button-text text-button-text text-on-surface shadow-sm hover:border-outline transition-all active:scale-90" data-type="antonym" draggable="true" id="word-fearful" ondragstart="drag(event)">Fearful</div>
-<div class="word-chip px-5 py-3 bg-white border-2 border-border-subtle rounded-full font-button-text text-button-text text-on-surface shadow-sm hover:border-outline transition-all active:scale-90" data-type="synonym" draggable="true" id="word-valiant" ondragstart="drag(event)">Valiant</div>
-<div class="word-chip px-5 py-3 bg-white border-2 border-border-subtle rounded-full font-button-text text-button-text text-on-surface shadow-sm hover:border-outline transition-all active:scale-90" data-type="antonym" draggable="true" id="word-cowardly" ondragstart="drag(event)">Cowardly</div>
-<div class="word-chip px-5 py-3 bg-white border-2 border-border-subtle rounded-full font-button-text text-button-text text-on-surface shadow-sm hover:border-outline transition-all active:scale-90" data-type="synonym" draggable="true" id="word-bold" ondragstart="drag(event)">Bold</div>
 </div>
 </main>
 <nav id="app-footer"></nav>
 <script src="resources/js/footer.js"></script>
+<script src="resources/js/vocab-store.js"></script>
+<script src="resources/js/progress-store.js"></script>
+<script src="resources/js/session-store.js"></script>
 <script src="resources/js/pruning.js"></script>
 
 </body></html>

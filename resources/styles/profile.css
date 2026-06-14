@@ -1,0 +1,61 @@
+.profile-layout {
+  margin-top: 1.2rem;
+}
+
+.profile-card {
+  border: 1px solid var(--outline-subtle);
+  border-radius: 1.05rem;
+  background: var(--surface-white);
+  padding: 1.2rem 1.1rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.profile-title {
+  margin: 0;
+  font-size: 1.35rem;
+  color: var(--primary-deep);
+}
+
+.profile-subtitle {
+  margin: 0.25rem 0 1rem;
+  color: var(--on-surface-variant);
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.profile-meta {
+  margin: -0.5rem 0 1rem;
+  font-size: 0.82rem;
+  color: var(--on-surface-variant);
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.profile-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.metric {
+  border: 1px solid var(--outline-subtle);
+  border-radius: 0.9rem;
+  padding: 0.75rem 0.6rem;
+  background: #f7faf5;
+}
+
+.metric-label {
+  margin: 0;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--on-surface-variant);
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.metric-value {
+  margin: 0.4rem 0 0;
+  font-size: 1.4rem;
+  line-height: 1.1;
+  color: var(--primary-deep);
+  font-weight: 700;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}

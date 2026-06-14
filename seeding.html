@@ -36,9 +36,9 @@
 <span class="material-symbols-outlined text-primary text-5xl" style="font-variation-settings: &quot;FILL&quot; 0;">potted_plant</span>
 </div>
 <span class="text-on-surface-variant font-label-md tracking-widest uppercase mb-2">NEW SEEDLING</span>
-<h2 class="font-display-lg text-display-lg text-primary mb-6">Meticulous</h2>
-<p class="text-on-surface-variant italic mb-8">/məˈtikyələs/</p>
-<button class="mt-auto px-6 py-3 bg-surface-container-low border-2 border-border-subtle rounded-full font-button-text text-button-text text-primary flex items-center gap-2 hover:bg-surface-container transition-colors active:scale-95 duration-150" onclick="flipCard()">
+<h2 class="font-display-lg text-display-lg text-primary mb-6" id="seed-word">Meticulous</h2>
+<p class="text-on-surface-variant italic mb-8" id="seed-pronunciation">/məˈtikyələs/</p>
+<button class="mt-auto px-6 py-3 bg-surface-container-low border-2 border-border-subtle rounded-full font-button-text text-button-text text-primary flex items-center gap-2 hover:bg-surface-container transition-colors active:scale-95 duration-150" id="reveal-btn" onclick="flipCard()">
                         Reveal Definition
                         <span class="material-symbols-outlined text-[20px]">sync</span>
 </button>
@@ -60,13 +60,13 @@
 <div class="space-y-6">
 <section>
 <h3 class="text-primary font-label-md uppercase tracking-wider mb-2">Definition</h3>
-<p class="text-on-surface text-lg leading-relaxed">
+<p class="text-on-surface text-lg leading-relaxed" id="seed-definition">
                                 Showing great attention to detail; very careful and precise.
                             </p>
 </section>
 <section>
 <h3 class="text-primary font-label-md uppercase tracking-wider mb-2">Synonyms</h3>
-<div class="flex flex-wrap gap-2">
+<div class="flex flex-wrap gap-2" id="seed-synonyms">
 <span class="px-3 py-1 bg-surface-container-low border border-border-subtle rounded-full text-on-surface-variant text-sm">diligent</span>
 <span class="px-3 py-1 bg-surface-container-low border border-border-subtle rounded-full text-on-surface-variant text-sm">scrupulous</span>
 <span class="px-3 py-1 bg-surface-container-low border border-border-subtle rounded-full text-on-surface-variant text-sm">fastidious</span>
@@ -75,7 +75,7 @@
 <section>
 <h3 class="text-primary font-label-md uppercase tracking-wider mb-2">Example</h3>
 <div class="p-4 bg-background-off-white rounded-lg border-l-4 border-primary">
-<p class="text-on-surface-variant italic leading-relaxed">
+<p class="text-on-surface-variant italic leading-relaxed" id="seed-example">
                                     "The botanist was <span class="text-primary font-bold">meticulous</span> in recording every slight change in the seedling's growth."
                                 </p>
 </div>
@@ -92,11 +92,8 @@
 <div class="flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
 <p class="text-center text-on-surface-variant font-label-md mb-2">Did you know this word?</p>
 <div class="grid grid-cols-2 gap-4">
-<button class="h-14 bg-surface-white border-2 border-border-subtle rounded-xl font-button-text text-button-text text-on-surface hover:border-primary/50 transition-all active:scale-95">
-                    Not yet
-                </button>
-<button class="h-14 bg-primary text-white border-2 border-primary rounded-xl font-button-text text-button-text shadow-sm hover:opacity-90 transition-all active:scale-95">
-                    Got it!
+<button class="h-14 bg-primary text-white border-2 border-primary rounded-xl font-button-text text-button-text shadow-sm hover:opacity-90 transition-all active:scale-95" id="seed-next-btn">
+                    Next 
                 </button>
 </div>
 </div>
@@ -106,6 +103,9 @@
 <!-- BottomNavBar -->
 <nav id="app-footer"></nav>
 <script src="resources/js/footer.js"></script>
+<script src="resources/js/vocab-store.js"></script>
+<script src="resources/js/progress-store.js"></script>
+<script src="resources/js/session-store.js"></script>
 <script src="resources/js/seeding.js"></script>
 
 </body></html>
