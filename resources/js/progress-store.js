@@ -1,9 +1,22 @@
 (function () {
   const DB_NAME = "paper-garden-db";
-  const DB_VERSION = 1;
+  const DB_VERSION = 2;
   const PROGRESS_STORE = "progress";
+  const SESSION_STORE = "sessions";
 
   let dbPromise = null;
+
+  function ensureStores(db) {
+    if (!db.objectStoreNames.contains(PROGRESS_STORE)) {
+      const store = db.createObjectStore(PROGRESS_STORE, { keyPath: "wordId" });
+      store.createIndex("status", "status", { unique: false });
+      store.createIndex("nextReviewAt", "nextReviewAt", { unique: false });
+    }
+
+    if (!db.objectStoreNames.contains(SESSION_STORE)) {
+      db.createObjectStore(SESSION_STORE, { keyPath: "sessionId" });
+    }
+  }
 
   function openDatabase() {
     if (dbPromise) {
@@ -15,11 +28,7 @@
 
       request.onupgradeneeded = () => {
         const db = request.result;
-        if (!db.objectStoreNames.contains(PROGRESS_STORE)) {
-          const store = db.createObjectStore(PROGRESS_STORE, { keyPath: "wordId" });
-          store.createIndex("status", "status", { unique: false });
-          store.createIndex("nextReviewAt", "nextReviewAt", { unique: false });
-        }
+        ensureStores(db);
       };
 
       request.onsuccess = () => resolve(request.result);

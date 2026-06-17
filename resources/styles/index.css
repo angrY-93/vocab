@@ -357,6 +357,19 @@ main {
   font-size: 1rem;
   font-weight: 700;
   z-index: 40;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.start-plant-btn:hover {
+  background: #008a0e;
+  box-shadow: 0 10px 24px rgba(0, 110, 11, 0.35);
+  transform: translateY(-2px);
+}
+
+.start-plant-btn:active {
+  transform: scale(0.96);
+  box-shadow: 0 4px 12px rgba(0, 110, 11, 0.2);
 }
 
 .start-plant-btn .material-symbols-outlined {

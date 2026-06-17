@@ -3,8 +3,10 @@
   const card = document.getElementById("flashcard");
   const progressBar = document.getElementById("progress-bar");
   const nextButton = document.getElementById("seed-next-btn");
+  const prevButton = document.getElementById("seed-prev-btn");
   let session = null;
   let currentWord = null;
+  let currentIndex = 0;
 
   function flipCard() {
     isFlipped = !isFlipped;
@@ -27,8 +29,7 @@
   }
 
   function updateProgress() {
-    const total = session.wordIds.length;
-    const currentIndex = session.stageCursor.seeding || 0;
+    const total = (session && session.wordIds && session.wordIds.length) || 0;
     const completion = Math.min(100, Math.round((currentIndex / Math.max(1, total)) * 100));
     progressBar.style.width = `${completion}%`;
   }
@@ -46,38 +47,116 @@
     renderChips("seed-synonyms", word.synonyms || []);
   }
 
-  async function goNext() {
-    if (!currentWord || !session) {
-      return;
-    }
+  async function init() {
+    session = await window.PaperGardenSessionStore.ensureActiveSession();
+    const totalWords = (session && session.wordIds && session.wordIds.length) || 0;
+    currentIndex = (session && session.stageCursor && session.stageCursor.seeding) || 0;
 
-    nextButton.disabled = true;
-    await window.PaperGardenProgressStore.recordAttempt(currentWord.id, true);
-    await window.PaperGardenSessionStore.recordAttemptResult(true);
-
-    const nextIndex = (session.stageCursor.seeding || 0) + 1;
-    await window.PaperGardenSessionStore.updateStageCursor("seeding", nextIndex);
-    session = await window.PaperGardenSessionStore.getActiveSession();
-
-    if (!session || nextIndex >= session.wordIds.length) {
+    if (!session || totalWords === 0 || currentIndex >= totalWords) {
       window.location.href = "watering.html";
       return;
     }
 
-    currentWord = await window.PaperGardenVocabStore.getWordById(session.wordIds[nextIndex]);
-    isFlipped = false;
-    card.classList.remove("rotate-y-180");
+    currentWord = await window.PaperGardenVocabStore.getWordById(session.wordIds[currentIndex]);
     renderWord(currentWord);
     updateProgress();
-    nextButton.disabled = false;
+    updatePrevButtonState();
   }
 
-  async function init() {
-    session = await window.PaperGardenSessionStore.ensureActiveSession();
-    const index = session.stageCursor.seeding || 0;
-    currentWord = await window.PaperGardenVocabStore.getWordById(session.wordIds[index]);
-    renderWord(currentWord);
-    updateProgress();
+  async function goNext() {
+    if (nextButton.disabled) {
+      return;
+    }
+
+    if (!session || !currentWord) {
+      await init();
+      if (!session || !currentWord) {
+        return;
+      }
+    }
+
+    nextButton.disabled = true;
+
+    try {
+      await window.PaperGardenProgressStore.recordAttempt(currentWord.id, true);
+      await window.PaperGardenSessionStore.recordAttemptResult(true);
+
+      currentIndex += 1;
+      const updatedSession = await window.PaperGardenSessionStore.updateStageCursor("seeding", currentIndex);
+      session = updatedSession || (await window.PaperGardenSessionStore.getActiveSession());
+
+      const totalWords = (session && session.wordIds && session.wordIds.length) || 0;
+      if (!session || currentIndex >= totalWords) {
+        window.location.href = "watering.html";
+        return;
+      }
+
+      const nextWordId = session.wordIds[currentIndex];
+      currentWord = await window.PaperGardenVocabStore.getWordById(nextWordId);
+
+      if (!currentWord) {
+        window.location.href = "watering.html";
+        return;
+      }
+
+      isFlipped = false;
+      card.classList.remove("rotate-y-180");
+      renderWord(currentWord);
+      updateProgress();
+      updatePrevButtonState();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      nextButton.disabled = false;
+    }
+  }
+
+  async function goPrev() {
+    if (prevButton.disabled) {
+      return;
+    }
+
+    if (!session || !currentWord) {
+      return;
+    }
+
+    prevButton.disabled = true;
+
+    try {
+      currentIndex -= 1;
+      if (currentIndex < 0) {
+        currentIndex = 0;
+        return;
+      }
+
+      const updatedSession = await window.PaperGardenSessionStore.updateStageCursor("seeding", currentIndex);
+      session = updatedSession || (await window.PaperGardenSessionStore.getActiveSession());
+
+      const prevWordId = session.wordIds[currentIndex];
+      currentWord = await window.PaperGardenVocabStore.getWordById(prevWordId);
+
+      if (!currentWord) {
+        return;
+      }
+
+      isFlipped = false;
+      card.classList.remove("rotate-y-180");
+      renderWord(currentWord);
+      updateProgress();
+      updatePrevButtonState();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      prevButton.disabled = false;
+    }
+  }
+
+  function updatePrevButtonState() {
+    if (prevButton && currentIndex <= 0) {
+      prevButton.disabled = true;
+    } else if (prevButton) {
+      prevButton.disabled = false;
+    }
   }
 
   window.flipCard = flipCard;
@@ -104,6 +183,7 @@
   });
 
   nextButton.addEventListener("click", goNext);
+  prevButton.addEventListener("click", goPrev);
   window.renderFooter({ active: "home" });
   init().catch((error) => console.error(error));
 })();

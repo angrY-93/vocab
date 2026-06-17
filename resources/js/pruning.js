@@ -5,11 +5,16 @@
   const antonymChips = document.getElementById("antonym-chips");
   const wordBank = document.getElementById("word-bank");
   const progressBar = document.getElementById("progress-bar");
+  const checkBtn = document.getElementById("check-btn");
+  const continueBtn = document.getElementById("continue-btn");
 
   let session = null;
   let currentWord = null;
   let currentIndex = 0;
-  let remainingCorrectDrops = 0;
+  let hasCheckedCurrentPlacement = false;
+  let hasCheckedCurrentWord = false;
+  let evaluatedArrangements = new Set();
+  let initialChipOrder = [];
 
   function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
@@ -42,6 +47,78 @@
     return chip;
   }
 
+  function clearChipMarker(chip) {
+    const marker = chip.querySelector(".result-marker");
+    if (marker) {
+      marker.remove();
+    }
+  }
+
+  function setChipMarker(chip, isCorrect) {
+    clearChipMarker(chip);
+    const marker = document.createElement("span");
+    marker.className = "result-marker material-symbols-outlined";
+    marker.textContent = isCorrect ? "check_circle" : "cancel";
+    marker.classList.add(isCorrect ? "marker-correct" : "marker-wrong");
+    chip.appendChild(marker);
+  }
+
+  function resetChipFeedback() {
+    document.querySelectorAll(".word-chip").forEach((chip) => {
+      chip.classList.remove("border-primary", "border-error");
+      chip.classList.add("border-border-subtle");
+      clearChipMarker(chip);
+    });
+  }
+
+  function serializeContainer(container) {
+    return Array.from(container.children)
+      .map((chip) => `${chip.textContent}:${chip.getAttribute("data-type")}`)
+      .sort()
+      .join("|");
+  }
+
+  function getArrangementSignature() {
+    return [
+      `syn:${serializeContainer(synonymChips)}`,
+      `ant:${serializeContainer(antonymChips)}`,
+      `bank:${serializeContainer(wordBank)}`,
+    ].join("::");
+  }
+
+  function syncActionButtons() {
+    const allPlaced = areAllChipsPlaced();
+    checkBtn.disabled = !allPlaced;
+    continueBtn.classList.toggle("hidden", !hasCheckedCurrentWord);
+    continueBtn.disabled = !hasCheckedCurrentWord;
+
+    if (!hasCheckedCurrentWord) {
+      continueBtn.textContent = "Continue";
+      return;
+    }
+
+    continueBtn.textContent = hasCheckedCurrentPlacement ? "Continue" : "Retry";
+  }
+
+  function markArrangementDirty() {
+    hasCheckedCurrentPlacement = false;
+    resetChipFeedback();
+    syncActionButtons();
+  }
+
+  function restoreInitialPlacement() {
+    synonymChips.innerHTML = "";
+    antonymChips.innerHTML = "";
+    wordBank.innerHTML = "";
+
+    initialChipOrder.forEach((chipData, index) => {
+      const chip = makeWordChip(chipData.label, chipData.type, index);
+      wordBank.appendChild(chip);
+    });
+
+    markArrangementDirty();
+  }
+
   function renderWord(word) {
     document.getElementById("pruning-word").textContent = word.word;
     synonymChips.innerHTML = "";
@@ -51,12 +128,65 @@
     const synonymItems = (word.synonyms || []).slice(0, 2).map((label) => ({ label, type: "synonym" }));
     const antonymItems = (word.antonyms || []).slice(0, 2).map((label) => ({ label, type: "antonym" }));
     const chips = shuffle([...synonymItems, ...antonymItems]);
+    initialChipOrder = chips.map((chipData) => ({ ...chipData }));
 
-    remainingCorrectDrops = chips.length;
     chips.forEach((chipData, index) => {
       const chip = makeWordChip(chipData.label, chipData.type, index);
       wordBank.appendChild(chip);
     });
+
+    hasCheckedCurrentPlacement = false;
+    hasCheckedCurrentWord = false;
+    evaluatedArrangements = new Set();
+    resetChipFeedback();
+    continueBtn.classList.add("hidden");
+    syncActionButtons();
+  }
+
+  function areAllChipsPlaced() {
+    return wordBank.children.length === 0;
+  }
+
+  function checkAllAnswers() {
+    const synonymChipsList = Array.from(synonymChips.children);
+    const antonymChipsList = Array.from(antonymChips.children);
+
+    let isCorrect = true;
+    resetChipFeedback();
+
+    synonymChipsList.forEach((chip) => {
+      const chipType = chip.getAttribute("data-type");
+      if (chipType === "synonym") {
+        chip.classList.remove("border-border-subtle");
+        chip.classList.add("border-primary");
+        setChipMarker(chip, true);
+      } else {
+        chip.classList.remove("border-border-subtle");
+        chip.classList.add("border-error");
+        setChipMarker(chip, false);
+        isCorrect = false;
+      }
+    });
+
+    antonymChipsList.forEach((chip) => {
+      const chipType = chip.getAttribute("data-type");
+      if (chipType === "antonym") {
+        chip.classList.remove("border-border-subtle");
+        chip.classList.add("border-primary");
+        setChipMarker(chip, true);
+      } else {
+        chip.classList.remove("border-border-subtle");
+        chip.classList.add("border-error");
+        setChipMarker(chip, false);
+        isCorrect = false;
+      }
+    });
+
+    hasCheckedCurrentPlacement = isCorrect;
+    hasCheckedCurrentWord = true;
+    syncActionButtons();
+
+    return { isCorrect };
   }
 
   async function moveNextWord() {
@@ -74,57 +204,67 @@
     renderWord(currentWord);
   }
 
-  [synonymBed, antonymBed].forEach((bed) => {
-    bed.addEventListener("dragover", (event) => {
-      event.preventDefault();
-      bed.classList.add("drag-over");
+  function setupDropZoneListeners() {
+    [synonymBed, antonymBed].forEach((bed) => {
+      bed.addEventListener("dragover", (event) => {
+        event.preventDefault();
+        bed.classList.add("drag-over");
+      });
+
+      bed.addEventListener("dragleave", () => {
+        bed.classList.remove("drag-over");
+      });
+
+      bed.addEventListener("drop", async (event) => {
+        event.preventDefault();
+        bed.classList.remove("drag-over");
+
+        const id = event.dataTransfer.getData("text");
+        const type = event.dataTransfer.getData("type");
+        const element = document.getElementById(id);
+        if (!element) {
+          return;
+        }
+
+        const isSynonymBed = bed.id === "synonyms-bed";
+        const targetContainer = isSynonymBed ? synonymChips : antonymChips;
+
+        // Allow moving from word bank or from other beds
+        if (element.parentElement === wordBank || element.parentElement === synonymChips || element.parentElement === antonymChips) {
+          targetContainer.appendChild(element);
+          markArrangementDirty();
+
+          if (window.navigator.vibrate) {
+            window.navigator.vibrate(20);
+          }
+        }
+      });
     });
 
-    bed.addEventListener("dragleave", () => {
-      bed.classList.remove("drag-over");
+    // Also allow dragging back to word bank
+    wordBank.addEventListener("dragover", (event) => {
+      event.preventDefault();
     });
 
-    bed.addEventListener("drop", async (event) => {
+    wordBank.addEventListener("drop", (event) => {
       event.preventDefault();
-      bed.classList.remove("drag-over");
 
       const id = event.dataTransfer.getData("text");
-      const type = event.dataTransfer.getData("type");
       const element = document.getElementById(id);
-      if (!element || element.getAttribute("draggable") === "false") {
+      if (!element) {
         return;
       }
 
-      const isSynonymBed = bed.id === "synonyms-bed";
-      const isCorrect = (isSynonymBed && type === "synonym") || (!isSynonymBed && type === "antonym");
-
-      await window.PaperGardenProgressStore.recordAttempt(currentWord.id, isCorrect);
-      await window.PaperGardenSessionStore.recordAttemptResult(isCorrect);
-
-      if (isCorrect) {
-        element.classList.remove("bg-white", "border-border-subtle");
-        element.classList.add(isSynonymBed ? "bg-primary-container" : "bg-tertiary-container", "text-white", "success-glow");
-        element.setAttribute("draggable", "false");
-
-        const targetContainer = isSynonymBed ? synonymChips : antonymChips;
-        targetContainer.appendChild(element);
-        remainingCorrectDrops -= 1;
+      if (element.parentElement === synonymChips || element.parentElement === antonymChips) {
+        wordBank.appendChild(element);
+        markArrangementDirty();
 
         if (window.navigator.vibrate) {
           window.navigator.vibrate(20);
         }
-
-        if (remainingCorrectDrops <= 0) {
-          setTimeout(() => {
-            moveNextWord().catch((error) => console.error(error));
-          }, 350);
-        }
-      } else {
-        element.classList.add("animate-bounce");
-        setTimeout(() => element.classList.remove("animate-bounce"), 500);
       }
     });
-  });
+  }
 
   async function init() {
     session = await window.PaperGardenSessionStore.ensureActiveSession();
@@ -139,7 +279,34 @@
     currentWord = await window.PaperGardenVocabStore.getWordById(session.wordIds[currentIndex]);
     renderWord(currentWord);
     updateProgress();
+    setupDropZoneListeners();
   }
+
+  checkBtn.addEventListener("click", async () => {
+    if (!areAllChipsPlaced()) {
+      return;
+    }
+
+    const arrangementSignature = getArrangementSignature();
+    const { isCorrect } = checkAllAnswers();
+
+    if (!evaluatedArrangements.has(arrangementSignature)) {
+      evaluatedArrangements.add(arrangementSignature);
+      await window.PaperGardenProgressStore.recordAttempt(currentWord.id, isCorrect);
+      await window.PaperGardenSessionStore.recordAttemptResult(isCorrect);
+    }
+
+    syncActionButtons();
+  });
+
+  continueBtn.addEventListener("click", () => {
+    if (!hasCheckedCurrentPlacement) {
+      restoreInitialPlacement();
+      return;
+    }
+
+    moveNextWord().catch((error) => console.error(error));
+  });
 
   window.drag = drag;
   window.renderFooter({ active: "home" });

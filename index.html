@@ -42,28 +42,35 @@
         <div class="decor left" aria-hidden="true">
           <span class="material-symbols-outlined">eco</span>
         </div>
+
         <a href="seeding.html" class="stage-link-wrapper" aria-label="Go to Seedling stage page">
           <div class="stage stage-seedling">
-            <div class="node seedling">
+            <div class="node seedling" id="home-stage-seeding-node">
+              <span class="active-badge" id="home-stage-seeding-active" style="display: none;">ACTIVE</span>
               <span class="material-symbols-outlined">eco</span>
-              <div class="check-pill" aria-hidden="true">✓</div>
+              <div class="check-pill" id="home-stage-seeding-check" aria-hidden="true" style="display: none;">✓</div>
             </div>
             <div class="label-pill">SEEDLING</div>
           </div>
         </a>
+
         <a href="watering.html" class="stage-link-wrapper" aria-label="Go to Watering stage page">
           <div class="stage stage-watering">
-            <div class="node watering">
-              <span class="active-badge">ACTIVE</span>
+            <div class="node watering" id="home-stage-watering-node">
+              <span class="active-badge" id="home-stage-watering-active" style="display: none;">ACTIVE</span>
               <span class="material-symbols-outlined">water_drop</span>
+              <div class="check-pill" id="home-stage-watering-check" aria-hidden="true" style="display: none;">✓</div>
             </div>
             <div class="label-pill">WATERING</div>
           </div>
         </a>
+
         <a href="pruning.html" class="stage-link-wrapper" aria-label="Go to Pruning stage page">
           <div class="stage stage-pruning">
-            <div class="node pruning">
+            <div class="node pruning" id="home-stage-pruning-node">
+              <span class="active-badge" id="home-stage-pruning-active" style="display: none;">ACTIVE</span>
               <span class="material-symbols-outlined">content_cut</span>
+              <div class="check-pill" id="home-stage-pruning-check" aria-hidden="true" style="display: none;">✓</div>
             </div>
             <div class="label-pill">PRUNING</div>
           </div>

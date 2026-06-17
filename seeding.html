@@ -22,7 +22,7 @@
 </div>
 <!-- Progress Bar -->
 <div class="w-full h-2 bg-secondary-container rounded-full overflow-hidden">
-<div class="h-full bg-primary-container w-2/3 transition-all duration-700 ease-out" id="progress-bar"></div>
+<div class="h-full bg-primary-container w-0 transition-all duration-700 ease-out" id="progress-bar"></div>
 </div>
 </header>
 <main class="flex-1 w-full max-w-md mx-auto px-container-padding pt-8 pb-32 relative z-10">
@@ -92,6 +92,9 @@
 <div class="flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-300">
 <p class="text-center text-on-surface-variant font-label-md mb-2">Did you know this word?</p>
 <div class="grid grid-cols-2 gap-4">
+<button class="h-14 bg-primary text-white border-2 border-primary rounded-xl font-button-text text-button-text shadow-sm hover:opacity-90 transition-all active:scale-95" id="seed-prev-btn">
+                    Prev
+                </button>
 <button class="h-14 bg-primary text-white border-2 border-primary rounded-xl font-button-text text-button-text shadow-sm hover:opacity-90 transition-all active:scale-95" id="seed-next-btn">
                     Next 
                 </button>

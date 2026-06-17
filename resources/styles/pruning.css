@@ -6,6 +6,7 @@ body {
 
 .garden-bed {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 160px;
 }
 
 .garden-bed.drag-over {
@@ -14,7 +15,25 @@ body {
   border-color: #17cf26;
 }
 
+#word-bank {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 88px;
+  padding: 1rem;
+  border: 2px dashed #e5e7eb;
+  border-radius: 1rem;
+  background-color: rgba(242, 253, 234, 0.3);
+}
+
+#word-bank.drag-over {
+  background-color: rgba(242, 253, 234, 0.8);
+  border-color: #17cf26;
+}
+
 .word-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: grab;
   transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -36,4 +55,32 @@ body {
 
 .success-glow {
   box-shadow: 0 0 15px rgba(23, 207, 38, 0.5);
+}
+
+#button-container {
+  bottom: calc(5.75rem + env(safe-area-inset-bottom, 0px));
+}
+
+#button-container button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.result-marker {
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  font-size: 1.05rem;
+  line-height: 1;
+  background: #ffffff;
+  border-radius: 9999px;
+}
+
+.marker-correct {
+  color: #006e0b;
+}
+
+.marker-wrong {
+  color: #ba1a1a;
 }

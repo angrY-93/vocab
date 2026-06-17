@@ -5,6 +5,11 @@
     "pronunciation": "/məˈtɪkjələs/",
     "definition": "Showing great attention to detail; very careful and precise.",
     "example": "The botanist was meticulous in recording every slight change in the seedling's growth.",
+    "sentences": [
+      "She kept a ____ journal of every plant she watered.",
+      "The scientist was ____ when labeling each sample.",
+      "Only a ____ worker could spot that tiny error."
+    ],
     "synonyms": ["diligent", "scrupulous", "fastidious"],
     "antonyms": ["careless", "sloppy", "hasty"]
   },
@@ -14,6 +19,11 @@
     "pronunciation": "/kəˈreɪdʒəs/",
     "definition": "Able to face danger, fear, or difficulty with confidence.",
     "example": "The courageous hiker crossed the narrow bridge in strong winds.",
+    "sentences": [
+      "It was ____ of her to speak up for her friend.",
+      "The ____ firefighter entered the smoky building.",
+      "Trying again after failing was a ____ decision."
+    ],
     "synonyms": ["brave", "valiant", "bold"],
     "antonyms": ["fearful", "cowardly", "timid"]
   },
@@ -23,6 +33,11 @@
     "pronunciation": "/əˈbʌndənt/",
     "definition": "Existing in large quantities; plentiful.",
     "example": "After the rain, the garden had abundant blossoms.",
+    "sentences": [
+      "Sunlight is ____ in this part of the garden.",
+      "The market had an ____ supply of fresh fruit.",
+      "Wildflowers were ____ along the trail in spring."
+    ],
     "synonyms": ["plentiful", "ample", "copious"],
     "antonyms": ["scarce", "meager", "limited"]
   },
@@ -32,6 +47,11 @@
     "pronunciation": "/ˈfrædʒaɪl/",
     "definition": "Easily broken, damaged, or destroyed.",
     "example": "Handle the fragile vase with both hands.",
+    "sentences": [
+      "Please be careful with that ____ ornament.",
+      "The butterfly's wings looked delicate and ____.",
+      "Glass can be very ____ if dropped."
+    ],
     "synonyms": ["delicate", "breakable", "frail"],
     "antonyms": ["sturdy", "durable", "robust"]
   },
@@ -41,6 +61,11 @@
     "pronunciation": "/ˈvɪvɪd/",
     "definition": "Producing strong, clear, and detailed images in the mind.",
     "example": "Her vivid description made the story come alive.",
+    "sentences": [
+      "His ____ memory of the trip included every color and sound.",
+      "The painting used ____ shades of blue and red.",
+      "She gave a ____ account of the storm."
+    ],
     "synonyms": ["bright", "graphic", "striking"],
     "antonyms": ["dull", "faint", "vague"]
   },
@@ -50,6 +75,11 @@
     "pronunciation": "/rɪˈzɪliənt/",
     "definition": "Able to recover quickly from difficulties.",
     "example": "The resilient team bounced back after a tough loss.",
+    "sentences": [
+      "Children can be surprisingly ____ after setbacks.",
+      "The ____ plant survived both heat and frost.",
+      "A ____ community rebuilds after disasters."
+    ],
     "synonyms": ["tough", "adaptable", "hardy"],
     "antonyms": ["fragile", "weak", "brittle"]
   },
@@ -59,6 +89,11 @@
     "pronunciation": "/ˈtræŋkwɪl/",
     "definition": "Free from disturbance; calm.",
     "example": "The lake looked tranquil at sunrise.",
+    "sentences": [
+      "The garden felt ____ in the early morning light.",
+      "They sat in a ____ room and read quietly.",
+      "A ____ evening helped everyone relax."
+    ],
     "synonyms": ["peaceful", "serene", "calm"],
     "antonyms": ["noisy", "chaotic", "agitated"]
   },
@@ -68,6 +103,11 @@
     "pronunciation": "/ˈɪnəveɪtɪv/",
     "definition": "Featuring new methods; advanced and original.",
     "example": "She proposed an innovative way to recycle water.",
+    "sentences": [
+      "The team built an ____ tool for language practice.",
+      "Her ____ solution reduced water waste by half.",
+      "Schools praised the ____ teaching method."
+    ],
     "synonyms": ["creative", "original", "inventive"],
     "antonyms": ["conventional", "traditional", "unimaginative"]
   },
@@ -77,6 +117,11 @@
     "pronunciation": "/koʊˈhɪrənt/",
     "definition": "Logical and consistent; clear and understandable.",
     "example": "His explanation was coherent and easy to follow.",
+    "sentences": [
+      "Your argument is clear and ____.",
+      "She gave a ____ summary of the chapter.",
+      "The report became more ____ after editing."
+    ],
     "synonyms": ["logical", "consistent", "clear"],
     "antonyms": ["confusing", "inconsistent", "disjointed"]
   },
@@ -86,6 +131,11 @@
     "pronunciation": "/ˈtiːdiəs/",
     "definition": "Too long, slow, or dull; tiresome.",
     "example": "Copying the list by hand was a tedious task.",
+    "sentences": [
+      "Sorting thousands of files by hand is ____.",
+      "The movie felt ____ because it moved so slowly.",
+      "Repeating the same step all day was ____ work."
+    ],
     "synonyms": ["boring", "monotonous", "dreary"],
     "antonyms": ["exciting", "engaging", "lively"]
   },
@@ -95,6 +145,11 @@
     "pronunciation": "/bəˈnevələnt/",
     "definition": "Well meaning and kindly.",
     "example": "The benevolent donor funded the school garden.",
+    "sentences": [
+      "A ____ neighbor brought meals to the family.",
+      "The queen was remembered as a ____ ruler.",
+      "His ____ actions helped many students."
+    ],
     "synonyms": ["kind", "charitable", "compassionate"],
     "antonyms": ["cruel", "selfish", "malicious"]
   },
@@ -104,6 +159,11 @@
     "pronunciation": "/æmˈbɪɡjuəs/",
     "definition": "Open to more than one interpretation; unclear.",
     "example": "The directions were ambiguous and hard to apply.",
+    "sentences": [
+      "The sign was ____ and confused everyone.",
+      "Her answer sounded ____ rather than direct.",
+      "An ____ message can cause misunderstandings."
+    ],
     "synonyms": ["unclear", "vague", "equivocal"],
     "antonyms": ["clear", "definite", "explicit"]
   }

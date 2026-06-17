@@ -21,11 +21,11 @@
 </div>
 <!-- Progress Bar -->
 <div class="w-full h-2 bg-secondary-container rounded-full overflow-hidden">
-<div class="h-full bg-primary-container w-2/3 transition-all duration-700 ease-out" id="progress-bar"></div>
+<div class="h-full bg-primary-container w-0 transition-all duration-700 ease-out" id="progress-bar"></div>
 </div>
 </header>
 
-<main class="w-full max-w-md mt-20 px-container-padding pb-32 flex flex-col flex-1">
+<main class="w-full max-w-md mt-20 px-container-padding pb-56 flex flex-col flex-1">
 
 <!-- Target Word Card -->
 <section class="bg-surface-white rounded-xl shadow-sm border border-border-subtle p-inner-card-padding mb-8 relative overflow-hidden text-center">
@@ -58,7 +58,17 @@
 <!-- Image Illustration -->
 
 <!-- Word Bank (Chips) -->
-<div class="flex flex-wrap gap-3 justify-center mt-8" id="word-bank">
+<div class="flex flex-wrap gap-3 justify-center mt-8 mb-8" id="word-bank">
+</div>
+
+<!-- Check/Continue Buttons -->
+<div class="fixed left-1/2 -translate-x-1/2 w-full max-w-md px-container-padding flex gap-4 z-40" id="button-container">
+<button class="flex-1 h-14 bg-primary text-on-primary rounded-full font-button-text text-button-text active:scale-95 transition-all" id="check-btn">
+            Check
+        </button>
+<button class="flex-1 h-14 bg-primary text-on-primary rounded-full font-button-text text-button-text active:scale-95 transition-all hidden" id="continue-btn">
+            Continue
+        </button>
 </div>
 </main>
 <nav id="app-footer"></nav>

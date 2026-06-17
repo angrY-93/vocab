@@ -1,10 +1,23 @@
 (function () {
   const DB_NAME = "paper-garden-db";
-  const DB_VERSION = 1;
+  const DB_VERSION = 2;
   const SESSION_STORE = "sessions";
+  const PROGRESS_STORE = "progress";
   const ACTIVE_SESSION_KEY = "paper-garden-active-session-id";
 
   let dbPromise = null;
+
+  function ensureStores(db) {
+    if (!db.objectStoreNames.contains(SESSION_STORE)) {
+      db.createObjectStore(SESSION_STORE, { keyPath: "sessionId" });
+    }
+
+    if (!db.objectStoreNames.contains(PROGRESS_STORE)) {
+      const progressStore = db.createObjectStore(PROGRESS_STORE, { keyPath: "wordId" });
+      progressStore.createIndex("status", "status", { unique: false });
+      progressStore.createIndex("nextReviewAt", "nextReviewAt", { unique: false });
+    }
+  }
 
   function openDatabase() {
     if (dbPromise) {
@@ -16,14 +29,7 @@
 
       request.onupgradeneeded = () => {
         const db = request.result;
-        if (!db.objectStoreNames.contains(SESSION_STORE)) {
-          db.createObjectStore(SESSION_STORE, { keyPath: "sessionId" });
-        }
-        if (!db.objectStoreNames.contains("progress")) {
-          const progressStore = db.createObjectStore("progress", { keyPath: "wordId" });
-          progressStore.createIndex("status", "status", { unique: false });
-          progressStore.createIndex("nextReviewAt", "nextReviewAt", { unique: false });
-        }
+        ensureStores(db);
       };
 
       request.onsuccess = () => resolve(request.result);
@@ -184,6 +190,26 @@
     return session;
   }
 
+  function shuffleArray(array) {
+    const cloned = [...array];
+    for (let index = cloned.length - 1; index > 0; index -= 1) {
+      const randomIndex = Math.floor(Math.random() * (index + 1));
+      [cloned[index], cloned[randomIndex]] = [cloned[randomIndex], cloned[index]];
+    }
+    return cloned;
+  }
+
+  async function updateWateringOrder(shuffledWordIds) {
+    const session = await getActiveSession();
+    if (!session) {
+      return null;
+    }
+
+    session.wateringWordIds = shuffledWordIds;
+    await writeSession(session);
+    return session;
+  }
+
   async function recordAttemptResult(isCorrect) {
     const session = await getActiveSession();
     if (!session) {
@@ -229,5 +255,6 @@
     completeActiveSession,
     getLatestCompletedSession,
     readAllSessions,
+    updateWateringOrder,
   };
 })();

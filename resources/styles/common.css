@@ -65,6 +65,7 @@ body {
 .bg-primary-container { background-color: #17cf26; }
 .bg-primary-container\/20 { background-color: rgba(23, 207, 38, 0.2); }
 .bg-secondary-container { background-color: #d1e2c9; }
+.bg-error-soft { background-color: #fef2f2; }
 .bg-secondary-fixed { background-color: #d7e7ce; }
 .bg-surface-container { background-color: #e7f1df; }
 .bg-surface-container-highest { background-color: #dbe6d3; }
@@ -81,12 +82,16 @@ body {
 .text-on-surface { color: #151e13; }
 .text-on-surface-variant { color: #3d4b38; }
 .text-on-tertiary-container { color: #79283c; }
+.text-error-text { color: #b91c1c; }
 .text-surface-container { color: #e7f1df; }
 
 .border-border-subtle { border-color: #e5e7eb; }
+.border-error { border-color: #ba1a1a; }
+.border-outline-variant { border-color: #bbcbb3; }
 .border-primary { border-color: #006e0b; }
 .border-tertiary-fixed-dim { border-color: #ffb2be; }
 .hover\:border-primary\/50:hover { border-color: rgba(0, 110, 11, 0.5); }
+.hover\:border-outline-variant:hover { border-color: #bbcbb3; }
 
 .font-button-text { font-family: "Plus Jakarta Sans", sans-serif; }
 .font-display-lg-mobile, .font-display-lg, .font-body-md { font-family: "Literata", serif; }

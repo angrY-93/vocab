@@ -21,10 +21,10 @@
 </div>
 <!-- Progress Bar -->
 <div class="w-full h-2 bg-secondary-container rounded-full overflow-hidden">
-<div class="h-full bg-primary-container w-2/3 transition-all duration-700 ease-out" id="progress-bar"></div>
+<div class="h-full bg-primary-container w-0 transition-all duration-700 ease-out" id="progress-bar" style="width: 0%;"></div>
 </div>
 </header>
-<main class="w-full max-w-md flex-grow flex flex-col px-container-padding py-8">
+<main class="w-full max-w-md flex-grow flex flex-col px-container-padding py-8 overflow-y-auto">
 <!-- Illustration / Mood Area -->
 
 <!-- Central Sentence Card -->
@@ -36,17 +36,17 @@
 <span class="material-symbols-outlined absolute -bottom-4 -right-4 text-surface-container opacity-20 text-[80px]">potted_plant</span>
 </div>
 <!-- Feedback Hint -->
-<div class="mt-4 text-center h-6 transition-opacity" id="feedback-hint">
+<div class="mt-4 text-center h-6 transition-opacity opacity-0" id="feedback-hint">
 <p class="text-label-md font-label-md text-on-surface-variant">Tap the word that completes the garden!</p>
 </div>
 </main>
 <!-- Word Bank -->
-<section class="w-full max-w-md bg-surface-container-low px-container-padding pt-6 pb-12 rounded-t-[2rem] shadow-[0_-4px_10px_rgba(0,0,0,0.02)] border-t border-border-subtle">
+<section class="w-full max-w-md bg-surface-container-low px-container-padding pt-6 pb-40 rounded-t-[2rem] shadow-[0_-4px_10px_rgba(0,0,0,0.02)] border-t border-border-subtle">
 <div class="grid grid-cols-2 gap-stack-gap" id="word-bank">
 </div>
 </section>
 <!-- Success Drawer (Hidden by default) -->
-<div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-surface-container-highest translate-y-full transition-transform duration-500 z-50 rounded-t-[2rem] p-inner-card-padding" id="success-drawer">
+<div class="fixed left-1/2 w-full max-w-md bg-surface-container-highest rounded-t-[2rem] p-inner-card-padding" id="success-drawer">
 <div class="flex items-center gap-4 mb-6">
 <div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
 <span class="material-symbols-outlined text-[32px]">check_circle</span>
