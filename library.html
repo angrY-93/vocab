@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
   <link href="resources/styles/common.css" rel="stylesheet" />
   <link href="resources/styles/index.css" rel="stylesheet" />
+  <link href="resources/styles/library.css" rel="stylesheet" />
 </head>
 <body>
   <div class="app">
@@ -21,6 +22,49 @@
     </header>
 
     <main>
+      <section class="library-layout" aria-label="Vocabulary Library">
+        <div class="library-summary-card">
+          <p class="library-eyebrow">Vocabulary collection</p>
+          <h2 class="library-title">Your garden of words</h2>
+          <p class="library-subtitle">Browse the vocabulary already stored in your library.</p>
+          <div class="library-summary-metric" aria-label="Total stored vocabulary">
+            <span class="library-summary-label">Stored words</span>
+            <strong class="library-summary-value" id="library-total-count">0</strong>
+          </div>
+        </div>
+
+        <section class="library-groups-card" aria-labelledby="library-groups-title">
+          <div class="library-groups-header">
+            <div>
+              <p class="library-section-kicker">Alphabetical view</p>
+              <h2 id="library-groups-title">Browse by letter</h2>
+            </div>
+            <span class="material-symbols-outlined library-groups-icon" aria-hidden="true">sort_by_alpha</span>
+          </div>
+
+          <p class="library-loading" id="library-loading-state">Loading vocabulary…</p>
+          <p class="library-empty-state" id="library-empty-state" hidden>No vocabulary has been added yet.</p>
+          <div class="library-groups" id="library-groups" aria-live="polite"></div>
+        </section>
+
+        <section class="library-detail-overlay" id="library-detail-overlay" aria-hidden="true" hidden>
+          <div class="library-detail-backdrop" data-close-detail="true"></div>
+          <div class="library-detail-card" role="dialog" aria-modal="true" aria-labelledby="library-detail-word">
+            <div class="library-detail-header">
+              <div class="library-detail-header-copy">
+                <p class="library-section-kicker">Vocabulary entry</p>
+                <h2 class="library-detail-word" id="library-detail-word">Word</h2>
+                <p class="library-detail-pronunciation" id="library-detail-pronunciation" hidden></p>
+              </div>
+              <button class="library-detail-close" id="library-detail-close" type="button" aria-label="Close definition card">
+                <span class="material-symbols-outlined" aria-hidden="true">close</span>
+              </button>
+            </div>
+
+            <div class="library-detail-content" id="library-detail-content"></div>
+          </div>
+        </section>
+
         <div class="decor right" aria-hidden="true">
           <span class="material-symbols-outlined">local_florist</span>
         </div>
@@ -30,7 +74,8 @@
 
   <nav id="app-footer"></nav>
   <script src="resources/js/footer.js"></script>
-  <script src="resources/js/index.js"></script>
+  <script src="resources/js/vocab-store.js"></script>
+  <script src="resources/js/library.js"></script>
   <script>
     renderFooter({ active: "library" });
   </script>
