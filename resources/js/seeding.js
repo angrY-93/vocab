@@ -17,15 +17,11 @@
     }
   }
 
-  function renderChips(containerId, items) {
-    const container = document.getElementById(containerId);
-    container.innerHTML = "";
-    items.forEach((item) => {
-      const chip = document.createElement("span");
-      chip.className = "px-3 py-1 bg-surface-container-low border border-border-subtle rounded-full text-on-surface-variant text-sm";
-      chip.textContent = item;
-      container.appendChild(chip);
-    });
+  function makeChip(text) {
+    const chip = document.createElement("span");
+    chip.className = "px-3 py-1 bg-surface-container-low border border-border-subtle rounded-full text-on-surface-variant text-sm";
+    chip.textContent = text;
+    return chip;
   }
 
   function updateProgress() {
@@ -42,9 +38,59 @@
 
     document.getElementById("seed-word").textContent = word.word;
     document.getElementById("seed-pronunciation").textContent = word.pronunciation || "";
-    document.getElementById("seed-definition").textContent = word.definition;
-    document.getElementById("seed-example").textContent = `"${word.example}"`;
-    renderChips("seed-synonyms", word.synonyms || []);
+
+    const container = document.getElementById("seed-definitions");
+    container.innerHTML = "";
+
+    (word.definitions || []).forEach((def) => {
+      const wrapper = document.createElement("div");
+      wrapper.className = "space-y-4 pb-4 border-b border-border-subtle last:border-0 last:pb-0";
+
+      // Part-of-speech badge + definition
+      const defSection = document.createElement("section");
+      const posTag = document.createElement("span");
+      posTag.className = "inline-block px-2 py-0.5 bg-primary-container/20 text-primary text-xs font-label-md rounded uppercase tracking-wider mb-1";
+      posTag.textContent = def.part_of_speech;
+      const defHeading = document.createElement("h3");
+      defHeading.className = "text-primary font-label-md uppercase tracking-wider mb-2 mt-1";
+      defHeading.textContent = "Definition";
+      const defText = document.createElement("p");
+      defText.className = "text-on-surface text-lg leading-relaxed";
+      defText.textContent = def.definition;
+      defSection.appendChild(posTag);
+      defSection.appendChild(defHeading);
+      defSection.appendChild(defText);
+
+      // Synonyms
+      const synSection = document.createElement("section");
+      const synHeading = document.createElement("h3");
+      synHeading.className = "text-primary font-label-md uppercase tracking-wider mb-2";
+      synHeading.textContent = "Synonyms";
+      const synChips = document.createElement("div");
+      synChips.className = "flex flex-wrap gap-2";
+      (def.synonyms || []).forEach((s) => synChips.appendChild(makeChip(s)));
+      synSection.appendChild(synHeading);
+      synSection.appendChild(synChips);
+
+      // Example
+      const exSection = document.createElement("section");
+      const exHeading = document.createElement("h3");
+      exHeading.className = "text-primary font-label-md uppercase tracking-wider mb-2";
+      exHeading.textContent = "Example";
+      const exBox = document.createElement("div");
+      exBox.className = "p-4 bg-background-off-white rounded-lg border-l-4 border-primary";
+      const exText = document.createElement("p");
+      exText.className = "text-on-surface-variant italic leading-relaxed";
+      exText.textContent = `"${def.example}"`;
+      exBox.appendChild(exText);
+      exSection.appendChild(exHeading);
+      exSection.appendChild(exBox);
+
+      wrapper.appendChild(defSection);
+      wrapper.appendChild(synSection);
+      wrapper.appendChild(exSection);
+      container.appendChild(wrapper);
+    });
   }
 
   async function init() {

@@ -125,8 +125,10 @@
     antonymChips.innerHTML = "";
     wordBank.innerHTML = "";
 
-    const synonymItems = (word.synonyms || []).slice(0, 2).map((label) => ({ label, type: "synonym" }));
-    const antonymItems = (word.antonyms || []).slice(0, 2).map((label) => ({ label, type: "antonym" }));
+    const allSynonyms = [...new Set((word.definitions || []).flatMap((d) => d.synonyms || []))];
+    const allAntonyms = [...new Set((word.definitions || []).flatMap((d) => d.antonyms || []))];
+    const synonymItems = allSynonyms.map((label) => ({ label, type: "synonym" }));
+    const antonymItems = allAntonyms.map((label) => ({ label, type: "antonym" }));
     const chips = shuffle([...synonymItems, ...antonymItems]);
     initialChipOrder = chips.map((chipData) => ({ ...chipData }));
 
