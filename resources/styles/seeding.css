@@ -11,6 +11,25 @@
 
 .shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
 
+.seed-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--outline-subtle, #e5e7eb);
+  border-radius: 9999px;
+  background: #f9fbf8;
+  color: var(--on-surface-variant, #3d4b38);
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.82rem;
+}
+
+.seed-chip-antonym {
+  border-color: rgba(153, 65, 85, 0.35);
+  background: rgba(255, 147, 167, 0.14);
+  color: #994155;
+}
+
 @keyframes shake {
   10%, 90% { transform: translate3d(-1px, 0, 0); }
   20%, 80% { transform: translate3d(2px, 0, 0); }

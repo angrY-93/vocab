@@ -2,6 +2,40 @@
   const DATA_URL = "resources/data/vocab-v2.jsonl";
   let cachedWords = null;
 
+  function normalizeDefinition(definition) {
+    if (!definition || typeof definition !== "object") {
+      return {
+        part_of_speech: "",
+        definition: "",
+        example: "",
+        sentences: [],
+        synonyms: [],
+        antonyms: [],
+      };
+    }
+
+    return {
+      ...definition,
+      example: definition.example || definition.example_sentence || "",
+      sentences: Array.isArray(definition.sentences)
+        ? definition.sentences
+        : Array.isArray(definition.practice_sentences)
+          ? definition.practice_sentences
+          : [],
+      synonyms: Array.isArray(definition.synonyms) ? definition.synonyms : [],
+      antonyms: Array.isArray(definition.antonyms) ? definition.antonyms : [],
+    };
+  }
+
+  function normalizeWord(record) {
+    return {
+      ...record,
+      definitions: Array.isArray(record.definitions)
+        ? record.definitions.map(normalizeDefinition)
+        : [],
+    };
+  }
+
   async function loadWords() {
     if (cachedWords) {
       return cachedWords;
@@ -30,7 +64,8 @@
           return false;
         }
         return true;
-      });
+      })
+      .map(normalizeWord);
 
     cachedWords = words;
     return cachedWords;

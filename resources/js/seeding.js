@@ -17,9 +17,9 @@
     }
   }
 
-  function makeChip(text) {
+  function makeChip(text, variant) {
     const chip = document.createElement("span");
-    chip.className = "px-3 py-1 bg-surface-container-low border border-border-subtle rounded-full text-on-surface-variant text-sm";
+    chip.className = variant === "antonym" ? "seed-chip seed-chip-antonym" : "seed-chip";
     chip.textContent = text;
     return chip;
   }
@@ -68,9 +68,24 @@
       synHeading.textContent = "Synonyms";
       const synChips = document.createElement("div");
       synChips.className = "flex flex-wrap gap-2";
-      (def.synonyms || []).forEach((s) => synChips.appendChild(makeChip(s)));
+      (def.synonyms || []).forEach((s) => synChips.appendChild(makeChip(s, "synonym")));
       synSection.appendChild(synHeading);
       synSection.appendChild(synChips);
+
+      // Antonyms
+      const antonymItems = def.antonyms || [];
+      let antSection = null;
+      if (antonymItems.length) {
+        antSection = document.createElement("section");
+        const antHeading = document.createElement("h3");
+        antHeading.className = "text-tertiary font-label-md uppercase tracking-wider mb-2";
+        antHeading.textContent = "Antonyms";
+        const antChips = document.createElement("div");
+        antChips.className = "flex flex-wrap gap-2";
+        antonymItems.forEach((a) => antChips.appendChild(makeChip(a, "antonym")));
+        antSection.appendChild(antHeading);
+        antSection.appendChild(antChips);
+      }
 
       // Example
       const exSection = document.createElement("section");
@@ -88,6 +103,9 @@
 
       wrapper.appendChild(defSection);
       wrapper.appendChild(synSection);
+      if (antSection) {
+        wrapper.appendChild(antSection);
+      }
       wrapper.appendChild(exSection);
       container.appendChild(wrapper);
     });
