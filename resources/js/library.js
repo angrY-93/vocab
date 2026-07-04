@@ -62,9 +62,10 @@
     return parts.join(" • ");
   }
 
-  function makeChip(text) {
+  function makeChip(text, variant) {
     const chip = document.createElement("span");
-    chip.className = "library-detail-chip";
+    chip.className =
+      variant === "antonym" ? "library-detail-chip library-detail-chip-antonym" : "library-detail-chip";
     chip.textContent = text;
     return chip;
   }
@@ -81,6 +82,26 @@
     paragraph.className = className;
     paragraph.textContent = text;
     return paragraph;
+  }
+
+  function asList(value, fallback) {
+    if (Array.isArray(value)) {
+      return value;
+    }
+
+    if (Array.isArray(fallback)) {
+      return fallback;
+    }
+
+    if (typeof value === "string" && value.trim()) {
+      return [value.trim()];
+    }
+
+    if (typeof fallback === "string" && fallback.trim()) {
+      return [fallback.trim()];
+    }
+
+    return [];
   }
 
   function getWordById(wordId) {
@@ -124,6 +145,10 @@
     content.replaceChildren();
 
     (word.definitions || []).forEach((definition) => {
+      const exampleText = definition.example || definition.example_sentence || "";
+      //const sentenceItems = asList(definition.sentences, definition.practice_sentences);
+      const synonymItems = asList(definition.synonyms, definition.synonym);
+      const antonymItems = asList(definition.antonyms, definition.antonym || definition.opposites);
       const block = document.createElement("article");
       block.className = "library-definition-block";
 
@@ -139,37 +164,37 @@
         block.appendChild(createParagraph(definition.definition, "library-detail-copy"));
       }
 
-      if (definition.example) {
+      if (exampleText) {
         block.appendChild(createSectionTitle("Example"));
-        block.appendChild(createParagraph(`“${definition.example}”`, "library-detail-example"));
+        block.appendChild(createParagraph(`“${exampleText}”`, "library-detail-example"));
       }
 
-      if (Array.isArray(definition.sentences) && definition.sentences.length) {
-        block.appendChild(createSectionTitle("Practice sentences"));
-        const sentenceList = document.createElement("ul");
-        sentenceList.className = "library-detail-sentence-list";
-        definition.sentences.forEach((sentence) => {
-          const item = document.createElement("li");
-          item.textContent = sentence;
-          sentenceList.appendChild(item);
-        });
-        block.appendChild(sentenceList);
-      }
+      //if (sentenceItems.length) {
+      //  block.appendChild(createSectionTitle("Practice sentences"));
+      //  const sentenceList = document.createElement("ul");
+      //  sentenceList.className = "library-detail-sentence-list";
+      //  sentenceItems.forEach((sentence) => {
+      //    const item = document.createElement("li");
+      //    item.textContent = sentence;
+      //    sentenceList.appendChild(item);
+      //  });
+      //  block.appendChild(sentenceList);
+      //}
 
-      if (Array.isArray(definition.synonyms) && definition.synonyms.length) {
+      if (synonymItems.length) {
         block.appendChild(createSectionTitle("Synonyms"));
         const synonyms = document.createElement("div");
         synonyms.className = "library-detail-chip-list";
-        definition.synonyms.forEach((value) => synonyms.appendChild(makeChip(value)));
+        synonymItems.forEach((value) => synonyms.appendChild(makeChip(value, "synonym")));
         block.appendChild(synonyms);
       }
 
-      if (Array.isArray(definition.antonyms) && definition.antonyms.length) {
+      if (antonymItems.length) {
         block.appendChild(createSectionTitle("Antonyms"));
         const antonyms = document.createElement("div");
         antonyms.className = "library-detail-chip-list";
-        definition.antonyms.forEach((value) => antonyms.appendChild(makeChip(value)));
-        block.appendChild(antonyms);
+        antonymItems.forEach((value) => antonyms.appendChild(makeChip(value, "antonym")));
+        block.appendChild(antonyms);  
       }
 
       content.appendChild(block);
