@@ -28,14 +28,34 @@
   }
 
   async function loadProfileSummary() {
-    const [latestCompletedSession, progressList] = await Promise.all([
+    const [latestCompletedSession, progressList, words] = await Promise.all([
       window.PaperGardenSessionStore.getLatestCompletedSession(),
       window.PaperGardenProgressStore.readAllProgress(),
+      window.PaperGardenVocabStore.loadWords(),
     ]);
 
-    const masteredCount = progressList.filter((record) => record.status === "mastered").length;
-    const nowMs = Date.now();
-    const dueCount = progressList.filter((record) => record.nextReviewAt && record.nextReviewAt <= nowMs).length;
+    const progressByWordId = new Map(progressList.map((record) => [record.wordId, record]));
+    let masteredCount = 0;
+    let unseenCount = 0;
+    let inProgressCount = 0;
+
+    words.forEach((word) => {
+      const record = progressByWordId.get(word.id);
+      const mastery = window.PaperGardenProgressStore.getMasteryScore(record);
+      const attempts = record && Number.isFinite(record.attemptCount)
+        ? record.attemptCount
+        : record && Number.isFinite(record.seenCount)
+          ? record.seenCount
+          : 0;
+
+      if (attempts <= 0) {
+        unseenCount += 1;
+      } else if (mastery > 0.95) {
+        masteredCount += 1;
+      } else {
+        inProgressCount += 1;
+      }
+    });
 
     const sessionScore = latestCompletedSession
       ? formatPercent(latestCompletedSession.correctAttempts, latestCompletedSession.wrongAttempts)
@@ -44,7 +64,8 @@
 
     document.getElementById("profile-last-score").textContent = sessionScore;
     document.getElementById("profile-mastered-count").textContent = String(masteredCount);
-    document.getElementById("profile-due-count").textContent = String(dueCount);
+    document.getElementById("profile-unseen-count").textContent = String(unseenCount);
+    document.getElementById("profile-in-progress-count").textContent = String(inProgressCount);
     document.getElementById("profile-last-completed").textContent = `Last completed: ${completedAt}`;
   }
 

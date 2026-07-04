@@ -12,11 +12,11 @@ The app now uses a local-first data model for vocabulary and user progress.
 
 ### Vocabulary content
 
-- Source file: `resources/data/vocab-v1.json`
+- Source file: `resources/data/vocab-v2.jsonl`
 - Loaded through: `resources/js/vocab-store.js`
-- Hosted as static JSON (GitHub Pages compatible)
+- Hosted as static JSONL (GitHub Pages compatible)
 
-### User progress and proficiency
+### User progress and mastery
 
 - Store: IndexedDB (`paper-garden-db`)
 - Progress table: `progress` (keyed by `wordId`)
@@ -27,22 +27,27 @@ The app now uses a local-first data model for vocabulary and user progress.
 
 Tracked per word:
 
-- `status`: `new` | `learning` | `review` | `mastered`
-- `proficiency`: numeric score (0-100)
-- `correctStreak`, `wrongCount`, `seenCount`
-- `lastSeenAt`, `nextReviewAt`
+- `status`: `new` | `learning` | `mastered`
+- `attemptCount`, `correctCount`, `masteryScore`
+- `seenCount`
+- `lastSeenAt`
 
 Status meaning:
 
 - `new`: not introduced yet
-- `learning`: introduced and not due now
-- `review`: due now (or answered incorrectly)
-- `mastered`: high proficiency with longer review intervals
+- `learning`: seen in watering/pruning but not mastered yet
+- `mastered`: `masteryScore > 0.95`
+
+Mastery score formula:
+
+- `masteryScore = correctCount / attemptCount`
+- Unseen words have score `0`
+- Only watering and pruning attempts contribute to mastery counters
 
 ### Session and batch sampling
 
 - Batch size: 10 words
-- Mix target: 5 new + 5 review/learning (with fallback if a pool is small)
+- Sampling favors non-mastered words with lower `masteryScore`
 - A sampled batch is stable per active session across all stages
 
 Trigger rules:

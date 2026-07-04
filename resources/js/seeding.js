@@ -142,7 +142,6 @@
     nextButton.disabled = true;
 
     try {
-      await window.PaperGardenProgressStore.recordAttempt(currentWord.id, true);
       await window.PaperGardenSessionStore.recordAttemptResult(true);
 
       currentIndex += 1;

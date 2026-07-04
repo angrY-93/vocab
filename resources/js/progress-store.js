@@ -74,73 +74,87 @@
     });
   }
 
+  function asNumber(value, fallback = 0) {
+    return Number.isFinite(value) ? value : fallback;
+  }
+
+  function normalizeRecord(record) {
+    if (!record) {
+      return null;
+    }
+
+    const attemptCount = asNumber(record.attemptCount, asNumber(record.seenCount, 0));
+    const legacyCorrect = Math.max(0, asNumber(record.correctStreak, 0));
+    const correctCount = Math.min(
+      attemptCount,
+      asNumber(record.correctCount, legacyCorrect)
+    );
+    const masteryScore = attemptCount > 0 ? correctCount / attemptCount : 0;
+    const status = masteryScore > 0.95 ? "mastered" : attemptCount > 0 ? "learning" : "new";
+
+    return {
+      ...record,
+      attemptCount,
+      correctCount,
+      masteryScore,
+      status,
+    };
+  }
+
+  function getMasteryScore(record) {
+    const normalized = normalizeRecord(record);
+    return normalized ? normalized.masteryScore : 0;
+  }
+
+  function isMastered(record) {
+    return getMasteryScore(record) > 0.95;
+  }
+
   function toStatusForSelection(record, nowMs) {
+    void nowMs;
     if (!record) {
       return "new";
     }
 
-    if (record.status === "mastered") {
-      return "mastered";
+    const normalized = normalizeRecord(record);
+    if (!normalized || normalized.attemptCount <= 0) {
+      return "new";
     }
 
-    if (record.nextReviewAt && record.nextReviewAt <= nowMs) {
-      return "review";
+    if (normalized.masteryScore > 0.95) {
+      return "mastered";
     }
 
     return "learning";
   }
 
-  function getNextReviewMs(correctStreak, isCorrect) {
-    if (!isCorrect) {
-      return Date.now() + 12 * 60 * 60 * 1000;
-    }
-
-    const dayMs = 24 * 60 * 60 * 1000;
-    if (correctStreak <= 1) {
-      return Date.now() + dayMs;
-    }
-    if (correctStreak === 2) {
-      return Date.now() + 3 * dayMs;
-    }
-    if (correctStreak === 3) {
-      return Date.now() + 7 * dayMs;
-    }
-    return Date.now() + 14 * dayMs;
-  }
-
   async function recordAttempt(wordId, isCorrect) {
     const nowMs = Date.now();
-    const existing = await readProgress(wordId);
+    const existing = normalizeRecord(await readProgress(wordId));
 
     const current = existing || {
       wordId,
       status: "new",
-      proficiency: 0,
-      correctStreak: 0,
-      wrongCount: 0,
       seenCount: 0,
+      attemptCount: 0,
+      correctCount: 0,
+      masteryScore: 0,
       lastSeenAt: null,
-      nextReviewAt: nowMs,
     };
+
+    const nextAttemptCount = (current.attemptCount || 0) + 1;
+    const nextCorrectCount = (current.correctCount || 0) + (isCorrect ? 1 : 0);
+    const nextMasteryScore = nextCorrectCount / nextAttemptCount;
 
     const updated = {
       ...current,
       seenCount: (current.seenCount || 0) + 1,
+      attemptCount: nextAttemptCount,
+      correctCount: nextCorrectCount,
+      masteryScore: nextMasteryScore,
       lastSeenAt: nowMs,
+      status: nextMasteryScore > 0.95 ? "mastered" : "learning",
     };
-
-    if (isCorrect) {
-      updated.correctStreak = (current.correctStreak || 0) + 1;
-      updated.proficiency = Math.min(100, (current.proficiency || 0) + 12);
-      updated.nextReviewAt = getNextReviewMs(updated.correctStreak, true);
-      updated.status = updated.proficiency >= 85 && updated.correctStreak >= 4 ? "mastered" : "learning";
-    } else {
-      updated.correctStreak = 0;
-      updated.wrongCount = (current.wrongCount || 0) + 1;
-      updated.proficiency = Math.max(0, (current.proficiency || 0) - 8);
-      updated.nextReviewAt = getNextReviewMs(0, false);
-      updated.status = "review";
-    }
 
     await writeProgress(updated);
     return updated;
@@ -152,5 +166,7 @@
     writeProgress,
     recordAttempt,
     toStatusForSelection,
+    getMasteryScore,
+    isMastered,
   };
 })();

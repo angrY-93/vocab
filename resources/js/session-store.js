@@ -83,49 +83,79 @@
     return picked;
   }
 
+  function pickWeightedFromPool(pool, count, usedSet, getWeight) {
+    const available = pool.filter((item) => !usedSet.has(item.id));
+    const picked = [];
+
+    while (picked.length < count && available.length > 0) {
+      let totalWeight = 0;
+      const weighted = available.map((item) => {
+        const rawWeight = getWeight(item);
+        const weight = Number.isFinite(rawWeight) && rawWeight > 0 ? rawWeight : 1;
+        totalWeight += weight;
+        return { item, weight };
+      });
+
+      const threshold = Math.random() * totalWeight;
+      let accumulator = 0;
+      let selectedIndex = weighted.length - 1;
+
+      for (let index = 0; index < weighted.length; index += 1) {
+        accumulator += weighted[index].weight;
+        if (accumulator >= threshold) {
+          selectedIndex = index;
+          break;
+        }
+      }
+
+      const [selected] = available.splice(selectedIndex, 1);
+      picked.push(selected);
+      usedSet.add(selected.id);
+    }
+
+    return picked;
+  }
+
   async function buildBatch(words, batchSize, newTarget) {
+    void newTarget;
     const nowMs = Date.now();
     const progressList = await window.PaperGardenProgressStore.readAllProgress();
     const progressByWordId = new Map(progressList.map((entry) => [entry.wordId, entry]));
 
-    const newPool = [];
-    const reviewPool = [];
-    const learningPool = [];
+    const nonMasteredPool = [];
     const masteredPool = [];
 
     words.forEach((word) => {
       const progress = progressByWordId.get(word.id);
       const bucket = window.PaperGardenProgressStore.toStatusForSelection(progress, nowMs);
 
-      if (bucket === "new") {
-        newPool.push(word);
-      } else if (bucket === "review") {
-        reviewPool.push(word);
-      } else if (bucket === "learning") {
-        learningPool.push(word);
-      } else {
+      if (bucket === "mastered") {
         masteredPool.push(word);
+      } else {
+        nonMasteredPool.push(word);
       }
     });
 
     const pickedIds = new Set();
-    const newWords = pickFromPool(newPool, Math.min(newTarget, batchSize), pickedIds);
+    const weightedLearningWords = pickWeightedFromPool(
+      nonMasteredPool,
+      Math.min(batchSize, nonMasteredPool.length),
+      pickedIds,
+      (word) => {
+        const progress = progressByWordId.get(word.id);
+        const mastery = window.PaperGardenProgressStore.getMasteryScore(progress);
+        return 1 + (1 - mastery) * 9;
+      }
+    );
 
-    const remainingSlots = Math.max(0, batchSize - newWords.length);
-    const reviewTarget = Math.min(remainingSlots, reviewPool.length);
-    const reviewWords = pickFromPool(reviewPool, reviewTarget, pickedIds);
+    const remainingAfterLearning = Math.max(0, batchSize - weightedLearningWords.length);
+    const masteredWords = pickFromPool(masteredPool, remainingAfterLearning, pickedIds);
 
-    const afterReviewSlots = Math.max(0, batchSize - newWords.length - reviewWords.length);
-    const learningWords = pickFromPool(learningPool, afterReviewSlots, pickedIds);
-
-    const afterLearningSlots = Math.max(0, batchSize - newWords.length - reviewWords.length - learningWords.length);
-    const masteredWords = pickFromPool(masteredPool, afterLearningSlots, pickedIds);
-
-    const fallbackPool = [...newPool, ...reviewPool, ...learningPool, ...masteredPool];
-    const remainingFallbackSlots = Math.max(0, batchSize - (newWords.length + reviewWords.length + learningWords.length + masteredWords.length));
+    const fallbackPool = [...nonMasteredPool, ...masteredPool];
+    const remainingFallbackSlots = Math.max(0, batchSize - (weightedLearningWords.length + masteredWords.length));
     const fallbackWords = pickFromPool(fallbackPool, remainingFallbackSlots, pickedIds);
 
-    return [...newWords, ...reviewWords, ...learningWords, ...masteredWords, ...fallbackWords].map((word) => word.id);
+    return [...weightedLearningWords, ...masteredWords, ...fallbackWords].map((word) => word.id);
   }
 
   async function startNewSession(options = {}) {
